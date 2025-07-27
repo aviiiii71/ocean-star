@@ -1,0 +1,105 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="en">\
+<head>\
+<meta charset="UTF-8" />\
+<meta name="viewport" content="width=device-width, initial-scale=1" />\
+<title>For Jaana - Your Private Memories</title>\
+<style>\
+  body \{\
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);\
+    color: #333;\
+    margin: 0; padding: 0;\
+    display: flex;\
+    justify-content: center;\
+    align-items: center;\
+    height: 100vh;\
+    flex-direction: column;\
+  \}\
+  #content \{\
+    max-width: 600px;\
+    background: white;\
+    border-radius: 10px;\
+    padding: 2em;\
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);\
+    display: none;\
+    text-align: center;\
+  \}\
+  #passwordInput \{\
+    padding: 0.8em;\
+    font-size: 1em;\
+    border-radius: 5px;\
+    border: 1px solid #ddd;\
+    width: 250px;\
+    margin-bottom: 1em;\
+  \}\
+  #submitBtn \{\
+    padding: 0.8em 1.5em;\
+    font-size: 1em;\
+    border: none;\
+    background-color: #ff6f91;\
+    color: white;\
+    border-radius: 5px;\
+    cursor: pointer;\
+  \}\
+  #submitBtn:hover \{\
+    background-color: #ff3b6a;\
+  \}\
+  #errorMsg \{\
+    color: #ff3b6a;\
+    margin-top: 1em;\
+    display: none;\
+  \}\
+</style>\
+</head>\
+<body>\
+\
+<h2>Please enter the password to see your memories, Jaana \uc0\u55357 \u56470 </h2>\
+<input type="password" id="passwordInput" placeholder="Enter password here" />\
+<button id="submitBtn">Unlock</button>\
+<div id="errorMsg">Wrong password, try again.</div>\
+\
+<div id="content">\
+  <h1>Welcome, my shining star Jaana! \uc0\u55356 \u57119 </h1>\
+  <p>This is your private page filled with our memories and love letters. I'll add everything soon. Meanwhile, know that I\'92m always with you, no matter the distance.</p>\
+</div>\
+\
+<script>\
+  const correctPassword = 'Yourstar@3107';\
+  const input = document.getElementById('passwordInput');\
+  const button = document.getElementById('submitBtn');\
+  const errorMsg = document.getElementById('errorMsg');\
+  const content = document.getElementById('content');\
+\
+  button.addEventListener('click', () => \{\
+    if(input.value === correctPassword)\{\
+      errorMsg.style.display = 'none';\
+      input.style.display = 'none';\
+      button.style.display = 'none';\
+      document.querySelector('h2').style.display = 'none';\
+      content.style.display = 'block';\
+    \} else \{\
+      errorMsg.style.display = 'block';\
+      input.value = '';\
+      input.focus();\
+    \}\
+  \});\
+\
+  // Optional: allow pressing Enter to submit\
+  input.addEventListener('keypress', (e) => \{\
+    if(e.key === 'Enter')\{\
+      button.click();\
+    \}\
+  \});\
+</script>\
+\
+</body>\
+</html>\
+}
