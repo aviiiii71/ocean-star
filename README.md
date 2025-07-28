@@ -79,14 +79,23 @@
       transition: transform 0.8s ease;
     }
 
-    .envelope:before {
-      content: "Open Me 💌";
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .envelope-label {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      width: 100%;
+      text-align: center;
       font-size: 16px;
       font-weight: bold;
       color: #cc3366;
+      z-index: 3;
+      background: #ffccd5;
+      padding: 5px 0;
+    }
+
+    .envelope:before {
+      content: "";
+      display: block;
       position: absolute;
       top: 0;
       left: 0;
@@ -189,16 +198,16 @@
 
   <script>
     const messages = [
-      "When you're missing me, know this: I miss you more, I feel you more, I love you more than words can say. 💖",
-      "When you're sad, remember my hugs are wrapped in this message. You are my sunshine, even on cloudy days. 🌧️☀️",
-      "When you're scared, feel my arms holding you from afar. You are never alone, jaan. 🌙",
-      "When you wake up, know I’m already thinking of you. Good morning, my heartbeat. ☀️",
-      "When it's late and quiet, I’m whispering 'I love you' to the moon just for you. 🌕💫",
-      "When you feel unloved, remember this letter was made with pure love. You're my everything. 💞",
-      "When you smile, the world feels right again. Your happiness is my favorite melody. 🎵",
-      "When we're far, close your eyes — my kiss is already on your forehead. 😘",
-      "When you're lost, follow the stars — they all lead to me and my love for you. ✨",
-      "When it's our day again, I’ll hold you tighter and never let go. I promise. 💍"
+      { label: "Feeling Lonely", text: "When you're missing me, know this: I miss you more, I feel you more, I love you more than words can say. 💖" },
+      { label: "Feeling Sad", text: "When you're sad, remember my hugs are wrapped in this message. You are my sunshine, even on cloudy days. 🌧️☀️" },
+      { label: "Feeling Scared", text: "When you're scared, feel my arms holding you from afar. You are never alone, jaan. 🌙" },
+      { label: "Waking Up", text: "When you wake up, know I’m already thinking of you. Good morning, my heartbeat. ☀️" },
+      { label: "Late Night Thoughts", text: "When it's late and quiet, I’m whispering 'I love you' to the moon just for you. 🌕💫" },
+      { label: "Feeling Unloved", text: "When you feel unloved, remember this letter was made with pure love. You're my everything. 💞" },
+      { label: "Feeling Happy", text: "When you smile, the world feels right again. Your happiness is my favorite melody. 🎵" },
+      { label: "Missing My Kiss", text: "When we're far, close your eyes — my kiss is already on your forehead. 😘" },
+      { label: "Feeling Lost", text: "When you're lost, follow the stars — they all lead to me and my love for you. ✨" },
+      { label: "Our Day Comes", text: "When it's our day again, I’ll hold you tighter and never let go. I promise. 💍" }
     ];
 
     function startExperience() {
@@ -210,13 +219,14 @@
 
     function renderEnvelopes() {
       const container = document.getElementById("envelopes");
-      messages.forEach((msg, i) => {
+      messages.forEach(({ label, text }) => {
         const wrap = document.createElement("div");
         wrap.className = "envelope-container";
         wrap.setAttribute("onclick", `openEnvelope(this)`);
         wrap.innerHTML = `
           <div class="envelope">
-            <div class="message">${msg}</div>
+            <div class="envelope-label">${label}</div>
+            <div class="message">${text}</div>
           </div>
         `;
         container.appendChild(wrap);
