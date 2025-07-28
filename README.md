@@ -2,203 +2,184 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>For You, My Love 💌</title>
+  <title>For You, My Love ❤️</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Quicksand&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Dancing Script', cursive;
+      font-family: 'Quicksand', sans-serif;
       background: linear-gradient(to bottom right, #ffe6f0, #e6f7ff);
       overflow-x: hidden;
+      position: relative;
     }
 
     .entrance {
       position: fixed;
       width: 100%;
-      height: 100%;
+      height: 100vh;
       background: #fff;
-      z-index: 10;
+      z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      animation: fadeIn 1s ease-in-out;
     }
 
     .entrance button {
       font-size: 24px;
-      padding: 12px 24px;
-      border: none;
-      background: #ff99cc;
+      padding: 14px 30px;
+      background: #ff69b4;
       color: white;
-      border-radius: 10px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: background 0.3s;
     }
-
-    h1 {
-      color: #cc3366;
-      margin-bottom: 20px;
+    .entrance button:hover {
+      background: #ff1493;
     }
 
     .container {
-      padding: 60px 20px;
+      padding: 40px 10px;
       display: none;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-size: 36px;
+      color: #cc3366;
+      margin-bottom: 40px;
     }
 
     .envelopes {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 30px;
+      justify-content: center;
     }
 
     .envelope {
-      width: 200px;
-      height: 140px;
+      perspective: 1200px;
       position: relative;
       cursor: pointer;
-      perspective: 1000px;
     }
 
     .flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
+      width: 100%;
       height: 0;
-      border-left: 100px solid transparent;
-      border-right: 100px solid transparent;
-      border-bottom: 70px solid #ffb6c1;
+      padding-bottom: 60%;
+      background: linear-gradient(to top right, #ffc0cb, #fff0f5);
+      border-radius: 10px 10px 0 0;
       transform-origin: top;
-      transition: transform 0.6s ease;
-      z-index: 2;
+      transition: transform 0.7s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     .body {
-      position: absolute;
-      top: 35px;
-      width: 200px;
-      height: 105px;
-      background: #fff0f5;
+      background: #fff;
+      padding: 20px;
+      border-radius: 0 0 15px 15px;
       border: 2px solid #ffb6c1;
-      border-radius: 0 0 10px 10px;
-      z-index: 1;
+      margin-top: -6px;
       overflow: hidden;
+      min-height: 120px;
       text-align: center;
-      padding: 10px;
-      box-sizing: border-box;
-      font-size: 14px;
     }
 
     .envelope.open .flap {
       transform: rotateX(-160deg);
     }
 
-    .kiss {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      font-size: 28px;
-      transform: translate(-50%, -50%) scale(0);
-      animation: kissPop 1s forwards;
-      z-index: 10;
-    }
-
-    .sparkle {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: gold;
-      border-radius: 50%;
-      animation: sparkleAnim 1.5s ease-out forwards;
-      pointer-events: none;
-      z-index: 5;
-      opacity: 0.8;
-      box-shadow: 0 0 6px 2px gold;
-    }
-
-    @keyframes sparkleAnim {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-60px) scale(0.2); opacity: 0; }
-    }
-
-    @keyframes kissPop {
-      0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-      50% { transform: translate(-50%, -80%) scale(1.5); opacity: 1; }
-      100% { transform: translate(-50%, -120%) scale(0.5); opacity: 0; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0 }
-      to { opacity: 1 }
-    }
-
-    .cat {
-      position: absolute;
-      bottom: 0;
-      left: -200px;
-      width: 120px;
-      animation: moveCat 20s linear infinite;
-      z-index: 1;
-    }
-
-    @keyframes moveCat {
-      0% { left: -200px; transform: scaleX(1); }
-      50% { left: 100%; transform: scaleX(1); }
-      51% { transform: scaleX(-1); }
-      100% { left: -200px; transform: scaleX(-1); }
-    }
-
     .message-title {
       font-size: 18px;
-      color: #cc3366;
       font-weight: bold;
-      margin-bottom: 10px;
+      color: #d63384;
+      margin-bottom: 8px;
     }
 
     .message-text {
-      font-size: 14px;
-      color: #444;
+      font-size: 15px;
+      color: #333;
       white-space: pre-wrap;
-      min-height: 40px;
+      min-height: 60px;
     }
 
-    @media(max-width: 600px) {
-      .envelope {
-        transform: scale(0.9);
-      }
+    .kiss, .sparkle {
+      position: absolute;
+      pointer-events: none;
+      animation: floatUp 1.5s ease-out forwards;
+    }
+
+    .kiss {
+      font-size: 28px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+    }
+
+    .sparkle {
+      width: 8px;
+      height: 8px;
+      background: gold;
+      border-radius: 50%;
+      opacity: 0.9;
+      box-shadow: 0 0 6px 2px gold;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-60px); opacity: 0; }
+    }
+
+    .cat {
+      position: fixed;
+      bottom: 0;
+      left: -160px;
+      width: 130px;
+      animation: catWalk 25s linear infinite;
+    }
+
+    @keyframes catWalk {
+      0% { left: -160px; transform: scaleX(1); }
+      50% { left: 100vw; transform: scaleX(1); }
+      50.1% { transform: scaleX(-1); }
+      100% { left: -160px; transform: scaleX(-1); }
     }
   </style>
 </head>
 <body>
 
   <div class="entrance">
-    <h1>💌 For My Jaana</h1>
-    <p style="font-size:18px;color:#888;margin-bottom:30px;">A collection of letters, just for your heart</p>
-    <button onclick="startExperience()">Tap to Begin</button>
+    <h1>My Letters to You ✨</h1>
+    <p style="font-size:18px;color:#777;margin-bottom:30px;">Click to begin opening my heart</p>
+    <button onclick="startExperience()">Start the Journey</button>
   </div>
 
   <div class="container">
-    <h1>Open When...</h1>
+    <h1>Choose a Letter to Open ✨</h1>
     <div class="envelopes" id="envelopes"></div>
   </div>
 
-  <img src="https://i.ibb.co/yRgy03k/blue-persian-cat.png" class="cat" alt="cat" />
+  <img src="https://i.ibb.co/yRgy03k/blue-persian-cat.png" class="cat" alt="cat">
 
   <script>
     const messages = [
-      { title: "You miss me", text: "Jaana, when you miss me, just know I miss you more. Close your eyes and feel my warmth." },
-      { title: "You're sad", text: "I'm holding your heart gently from afar. Cry if you must, but never forget my love surrounds you." },
-      { title: "You're stressed", text: "Take a breath. Let go. You're strong, soft, and seen. I’m so proud of your soul." },
-      { title: "You're alone", text: "You're not alone. My love is a quiet presence holding you always, even in silence." },
-      { title: "You need strength", text: "You are made of galaxies and fire. Remember who you are, my warrior queen." },
-      { title: "You're angry at me", text: "I’m sorry if I hurt you. It was never from lack of love — only distance and ache." },
-      { title: "You remember us", text: "Rooftops. Our kiss. That cafe. Every second lives in me. You’re still my magic." },
-      { title: "You can't sleep", text: "Imagine my arms wrapped around you. My fingers on your back. Sleep now, meri jaan." },
-      { title: "You need to smile", text: "Your smile is heaven. Let this silly message or memory bring it back. 😊" },
-      { title: "You need love", text: "This is it. The whole of my love, wrapped in words and stars. Yours. Forever." }
+      { title: "You miss me", text: "I miss you more, Jaana. Let this letter be my hug." },
+      { title: "You're sad", text: "You're allowed to cry, but never forget: I love you deeply." },
+      { title: "You're stressed", text: "Take this letter as your calm breath. I'm holding you." },
+      { title: "You feel alone", text: "You're never alone. My soul is right beside yours." },
+      { title: "You need strength", text: "You are strong and beautiful. You always rise." },
+      { title: "You're angry at me", text: "I'm sorry. I'm here. I love you more than my ego." },
+      { title: "You remember us", text: "Every moment with you is inked in my heart." },
+      { title: "You can't sleep", text: "Close your eyes. I'm humming to you from afar." },
+      { title: "You need to smile", text: "Smile, baby. It makes the stars blush." },
+      { title: "You need love", text: "This message is soaked in all my love for you." }
     ];
 
     function startExperience() {
@@ -206,47 +187,49 @@
       document.querySelector('.container').style.display = 'block';
     }
 
-    function typeWriter(text, el, i = 0) {
+    function typeWriter(text, element, i = 0) {
       if (i < text.length) {
-        el.innerHTML += text.charAt(i);
-        setTimeout(() => typeWriter(text, el, i + 1), 35);
+        element.innerHTML += text.charAt(i);
+        setTimeout(() => typeWriter(text, element, i + 1), 35);
       }
     }
 
-    const envelopeContainer = document.getElementById('envelopes');
-
-    messages.forEach((msg, index) => {
-      const envelope = document.createElement('div');
-      envelope.className = 'envelope';
-      envelope.innerHTML = `
+    const container = document.getElementById('envelopes');
+    messages.forEach((msg, idx) => {
+      const env = document.createElement('div');
+      env.className = 'envelope';
+      env.innerHTML = `
         <div class="flap"></div>
         <div class="body">
           <div class="message-title">${msg.title}</div>
-          <div class="message-text" id="msg-${index}"></div>
+          <div class="message-text" id="msg-${idx}"></div>
         </div>`;
-      envelope.addEventListener('click', () => {
-        if (!envelope.classList.contains('open')) {
-          envelope.classList.add('open');
-          const textEl = document.getElementById(`msg-${index}`);
-          typeWriter(msg.text, textEl);
-
+      env.addEventListener('click', () => {
+        if (!env.classList.contains('open')) {
+          env.classList.add('open');
+          const el = document.getElementById(`msg-${idx}`);
+          typeWriter(msg.text, el);
+          
           const kiss = document.createElement('div');
           kiss.className = 'kiss';
           kiss.innerHTML = '💋';
-          envelope.appendChild(kiss);
-          setTimeout(() => kiss.remove(), 2000);
+          env.appendChild(kiss);
+          kiss.style.top = '30%';
+          kiss.style.left = '50%';
+          kiss.style.opacity = 1;
 
-          for (let i = 0; i < 8; i++) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.style.left = `${Math.random() * 100}%`;
-            sparkle.style.top = `${Math.random() * 100}%`;
-            envelope.appendChild(sparkle);
-            setTimeout(() => sparkle.remove(), 1500);
+          for (let i = 0; i < 7; i++) {
+            const sp = document.createElement('div');
+            sp.className = 'sparkle';
+            sp.style.left = `${Math.random() * 90 + 5}%`;
+            sp.style.top = `${Math.random() * 80 + 10}%`;
+            env.appendChild(sp);
+            setTimeout(() => sp.remove(), 1500);
           }
+          setTimeout(() => kiss.remove(), 1500);
         }
       });
-      envelopeContainer.appendChild(envelope);
+      container.appendChild(env);
     });
   </script>
 
