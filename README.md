@@ -2,236 +2,204 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>For You, My Love ❤️</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Quicksand&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You 💌</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(to bottom right, #ffe6f0, #e6f7ff);
+      padding: 0;
+      background: linear-gradient(to bottom right, #ffe6f0, #f9f0ff);
+      font-family: 'Segoe UI', sans-serif;
       overflow-x: hidden;
-      position: relative;
-    }
-
-    .entrance {
-      position: fixed;
-      width: 100%;
-      height: 100vh;
-      background: #fff;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-    }
-
-    .entrance button {
-      font-size: 24px;
-      padding: 14px 30px;
-      background: #ff69b4;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .entrance button:hover {
-      background: #ff1493;
-    }
-
-    .container {
-      padding: 40px 10px;
-      display: none;
-      max-width: 1200px;
-      margin: auto;
     }
 
     h1 {
       text-align: center;
-      font-family: 'Dancing Script', cursive;
-      font-size: 36px;
+      margin-top: 40px;
+      font-size: 2.5em;
       color: #cc3366;
-      margin-bottom: 40px;
     }
 
-    .envelopes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 30px;
+    .envelope-grid {
+      display: flex;
+      flex-wrap: wrap;
       justify-content: center;
+      padding: 30px;
+      gap: 30px;
+    }
+
+    .envelope-container {
+      position: relative;
+      width: 200px;
+      height: 140px;
+      cursor: pointer;
+      perspective: 1000px;
     }
 
     .envelope {
-      perspective: 1200px;
       position: relative;
-      cursor: pointer;
-    }
-
-    .flap {
       width: 100%;
-      height: 0;
-      padding-bottom: 60%;
-      background: linear-gradient(to top right, #ffc0cb, #fff0f5);
-      border-radius: 10px 10px 0 0;
-      transform-origin: top;
-      transition: transform 0.7s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    .body {
-      background: #fff;
-      padding: 20px;
-      border-radius: 0 0 15px 15px;
-      border: 2px solid #ffb6c1;
-      margin-top: -6px;
+      height: 100%;
+      background: #ff99aa;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       overflow: hidden;
-      min-height: 120px;
-      text-align: center;
+      transition: transform 0.8s ease;
     }
 
-    .envelope.open .flap {
-      transform: rotateX(-160deg);
-    }
-
-    .message-title {
-      font-size: 18px;
-      font-weight: bold;
-      color: #d63384;
-      margin-bottom: 8px;
-    }
-
-    .message-text {
-      font-size: 15px;
-      color: #333;
-      white-space: pre-wrap;
-      min-height: 60px;
-    }
-
-    .kiss, .sparkle {
+    .envelope:before {
+      content: "";
       position: absolute;
-      pointer-events: none;
-      animation: floatUp 1.5s ease-out forwards;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #ffccd5;
+      transform: rotateX(0deg);
+      transform-origin: top;
+      transition: transform 1s ease;
+      z-index: 2;
     }
 
-    .kiss {
-      font-size: 28px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    .envelope.open:before {
+      transform: rotateX(-140deg);
+    }
+
+    .message {
       opacity: 0;
+      padding: 15px;
+      background: #fff;
+      height: 100%;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #333;
+      overflow: hidden;
+      z-index: 1;
+      position: relative;
+      border-radius: 10px;
+    }
+
+    .envelope.open .message {
+      animation: typewriter 3s steps(80, end) 1 forwards;
+    }
+
+    @keyframes typewriter {
+      from { opacity: 1; width: 0; }
+      to { opacity: 1; width: 100%; }
+    }
+
+    .sparkles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      width: 100vw;
+      height: 100vh;
+      z-index: 999;
     }
 
     .sparkle {
+      position: absolute;
       width: 8px;
       height: 8px;
-      background: gold;
+      background: pink;
       border-radius: 50%;
-      opacity: 0.9;
-      box-shadow: 0 0 6px 2px gold;
+      animation: sparkle 2s infinite;
     }
 
-    @keyframes floatUp {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-60px); opacity: 0; }
+    @keyframes sparkle {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(100px) scale(0); opacity: 0; }
     }
 
     .cat {
       position: fixed;
-      bottom: 0;
-      left: -160px;
-      width: 130px;
-      animation: catWalk 25s linear infinite;
+      bottom: 10px;
+      left: -200px;
+      width: 150px;
+      animation: catWalk 20s linear infinite;
+      z-index: 5;
     }
 
     @keyframes catWalk {
-      0% { left: -160px; transform: scaleX(1); }
-      50% { left: 100vw; transform: scaleX(1); }
-      50.1% { transform: scaleX(-1); }
-      100% { left: -160px; transform: scaleX(-1); }
+      0% { left: -200px; }
+      50% { left: 100vw; }
+      100% { left: -200px; }
+    }
+
+    audio {
+      display: none;
     }
   </style>
 </head>
 <body>
+  <h1>Open When... 💌</h1>
 
-  <div class="entrance">
-    <h1>My Letters to You ✨</h1>
-    <p style="font-size:18px;color:#777;margin-bottom:30px;">Click to begin opening my heart</p>
-    <button onclick="startExperience()">Start the Journey</button>
+  <div class="envelope-grid">
+    <div class="envelope-container" onclick="openEnvelope(this, 0)">
+      <div class="envelope">
+        <div class="message">When you're missing me, know this: I miss you more, I feel you more, I love you more than words can say. 💖</div>
+      </div>
+    </div>
+    <div class="envelope-container" onclick="openEnvelope(this, 1)">
+      <div class="envelope">
+        <div class="message">When you're sad, remember my hugs are wrapped in this message. You are my sunshine, even on cloudy days. 🌧️☀️</div>
+      </div>
+    </div>
+    <div class="envelope-container" onclick="openEnvelope(this, 2)">
+      <div class="envelope">
+        <div class="message">When you're scared, feel my arms holding you from afar. You are never alone, jaan. 🌙</div>
+      </div>
+    </div>
+    <!-- Add more envelopes here similarly -->
   </div>
 
-  <div class="container">
-    <h1>Choose a Letter to Open ✨</h1>
-    <div class="envelopes" id="envelopes"></div>
-  </div>
-
-  <img src="https://i.ibb.co/yRgy03k/blue-persian-cat.png" class="cat" alt="cat">
+  <div class="sparkles" id="sparkles"></div>
+  <img src="https://cdn.pixabay.com/photo/2023/04/09/21/21/cat-7911825_1280.png" class="cat" />
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/03/15/audio_51e3c989d3.mp3?filename=romantic-piano-144998.mp3" type="audio/mpeg" />
+  </audio>
 
   <script>
-    const messages = [
-      { title: "You miss me", text: "I miss you more, Jaana. Let this letter be my hug." },
-      { title: "You're sad", text: "You're allowed to cry, but never forget: I love you deeply." },
-      { title: "You're stressed", text: "Take this letter as your calm breath. I'm holding you." },
-      { title: "You feel alone", text: "You're never alone. My soul is right beside yours." },
-      { title: "You need strength", text: "You are strong and beautiful. You always rise." },
-      { title: "You're angry at me", text: "I'm sorry. I'm here. I love you more than my ego." },
-      { title: "You remember us", text: "Every moment with you is inked in my heart." },
-      { title: "You can't sleep", text: "Close your eyes. I'm humming to you from afar." },
-      { title: "You need to smile", text: "Smile, baby. It makes the stars blush." },
-      { title: "You need love", text: "This message is soaked in all my love for you." }
-    ];
-
-    function startExperience() {
-      document.querySelector('.entrance').style.display = 'none';
-      document.querySelector('.container').style.display = 'block';
+    function openEnvelope(el, i) {
+      if (el.classList.contains('opened')) return;
+      el.classList.add('opened');
+      const env = el.querySelector('.envelope');
+      env.classList.add('open');
+      createKiss(env);
     }
 
-    function typeWriter(text, element, i = 0) {
-      if (i < text.length) {
-        element.innerHTML += text.charAt(i);
-        setTimeout(() => typeWriter(text, element, i + 1), 35);
+    function createKiss(parent) {
+      const kiss = document.createElement('div');
+      kiss.innerHTML = '💋';
+      kiss.style.position = 'absolute';
+      kiss.style.fontSize = '24px';
+      kiss.style.left = '50%';
+      kiss.style.top = '50%';
+      kiss.style.transform = 'translate(-50%, -50%)';
+      kiss.style.opacity = '0';
+      kiss.style.transition = 'all 2s ease';
+      parent.appendChild(kiss);
+      setTimeout(() => {
+        kiss.style.top = '-50px';
+        kiss.style.opacity = '1';
+      }, 10);
+      setTimeout(() => parent.removeChild(kiss), 3000);
+    }
+
+    function generateSparkles() {
+      const sparkleArea = document.getElementById('sparkles');
+      for (let i = 0; i < 40; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        s.style.left = Math.random() * 100 + 'vw';
+        s.style.top = Math.random() * 100 + 'vh';
+        s.style.animationDelay = (Math.random() * 3) + 's';
+        sparkleArea.appendChild(s);
       }
     }
 
-    const container = document.getElementById('envelopes');
-    messages.forEach((msg, idx) => {
-      const env = document.createElement('div');
-      env.className = 'envelope';
-      env.innerHTML = `
-        <div class="flap"></div>
-        <div class="body">
-          <div class="message-title">${msg.title}</div>
-          <div class="message-text" id="msg-${idx}"></div>
-        </div>`;
-      env.addEventListener('click', () => {
-        if (!env.classList.contains('open')) {
-          env.classList.add('open');
-          const el = document.getElementById(`msg-${idx}`);
-          typeWriter(msg.text, el);
-          
-          const kiss = document.createElement('div');
-          kiss.className = 'kiss';
-          kiss.innerHTML = '💋';
-          env.appendChild(kiss);
-          kiss.style.top = '30%';
-          kiss.style.left = '50%';
-          kiss.style.opacity = 1;
-
-          for (let i = 0; i < 7; i++) {
-            const sp = document.createElement('div');
-            sp.className = 'sparkle';
-            sp.style.left = `${Math.random() * 90 + 5}%`;
-            sp.style.top = `${Math.random() * 80 + 10}%`;
-            env.appendChild(sp);
-            setTimeout(() => sp.remove(), 1500);
-          }
-          setTimeout(() => kiss.remove(), 1500);
-        }
-      });
-      container.appendChild(env);
-    });
+    generateSparkles();
   </script>
-
 </body>
 </html>
