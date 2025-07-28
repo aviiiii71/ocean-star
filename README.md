@@ -80,7 +80,13 @@
     }
 
     .envelope:before {
-      content: "";
+      content: "Open Me 💌";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #cc3366;
       position: absolute;
       top: 0;
       left: 0;
