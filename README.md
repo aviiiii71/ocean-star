@@ -1,284 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>For My Jaana 💌</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Dancing+Script&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Open When... 💌</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: #fff8f4;
-      font-family: 'Playfair Display', serif;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #fff1f5, #fef6f9);
       overflow-x: hidden;
-      position: relative;
-    }
-
-    .cat-container {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      z-index: 0;
-      opacity: 0.5;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .cat-container img {
-      width: 160px;
-      height: auto;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-15px); }
-      100% { transform: translateY(0px); }
     }
 
     .entrance {
       position: fixed;
+      z-index: 999;
+      background: linear-gradient(to right, #ffdde1, #ee9ca7);
       width: 100%;
       height: 100vh;
-      background: linear-gradient(to bottom right, #fbd3e9, #bbd2c5);
+      color: white;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       flex-direction: column;
-      z-index: 10;
-      transition: opacity 1s ease;
+      text-align: center;
     }
 
     .entrance h1 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.5rem;
-      color: #5a2a54;
-      margin-bottom: 20px;
+      font-size: 3em;
+      margin-bottom: 10px;
     }
 
     .entrance button {
-      padding: 12px 24px;
-      font-size: 1rem;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      background: white;
+      color: #cc3366;
       border: none;
-      border-radius: 8px;
-      background: #fff;
-      color: #5a2a54;
-      font-weight: bold;
+      border-radius: 10px;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      transition: background 0.3s ease;
+      transition: 0.3s;
     }
 
     .entrance button:hover {
-      background: #ffe5f1;
+      background: #ffe6ec;
     }
 
     .container {
       display: none;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      padding: 40px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .envelope-wrapper {
-      perspective: 1200px;
-    }
-
-    .envelope {
-      width: 280px;
-      height: 180px;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 1s;
-      cursor: pointer;
-    }
-
-    .envelope.open {
-      transform: rotateY(180deg);
-    }
-
-    .envelope-front, .envelope-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      backface-visibility: hidden;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    }
-
-    .envelope-front {
-      background: linear-gradient(to bottom right, #fbd3e9, #bbd2c5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #5a2a54;
-      font-family: 'Dancing Script', cursive;
-      padding: 10px;
+      padding: 30px 20px 80px;
       text-align: center;
     }
 
-    .envelope-back {
-      background: #fff;
-      transform: rotateY(180deg);
+    .container h1 {
+      font-size: 2.5em;
+      color: #cc3366;
+    }
+
+    .subtitle {
+      font-style: italic;
+      margin-bottom: 40px;
+      color: #555;
+    }
+
+    .envelopes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .envelope {
+      width: 200px;
+      height: 150px;
+      position: relative;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .envelope-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 1s;
+      transform-style: preserve-3d;
+    }
+
+    .envelope.opened .envelope-inner {
+      transform: rotateX(180deg);
+    }
+
+    .front, .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 20px;
-      font-size: 1rem;
-      color: #333;
-      line-height: 1.6;
-      border: 2px solid #f7cce3;
       box-sizing: border-box;
+      font-size: 15px;
     }
 
-    .envelope-back p {
-      margin: 0;
-      font-family: 'Playfair Display', serif;
+    .front {
+      background: #f9b3c2;
+      color: white;
+      font-weight: bold;
     }
 
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        align-items: center;
+    .back {
+      background: white;
+      transform: rotateX(180deg);
+      color: #333;
+      line-height: 1.4;
+      overflow-y: auto;
+    }
+
+    /* Cat animation */
+    .cat {
+      position: fixed;
+      width: 100px;
+      bottom: 20px;
+      left: -120px;
+      z-index: 1;
+      animation: moveCat 20s linear infinite;
+    }
+
+    @keyframes moveCat {
+      0% { left: -120px; transform: scaleX(1); }
+      50% { left: calc(100% + 120px); transform: scaleX(1); }
+      50.01% { transform: scaleX(-1); }
+      100% { left: -120px; transform: scaleX(-1); }
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+      animation: floatHeart 5s infinite ease-in-out;
+      z-index: 0;
+    }
+
+    @keyframes floatHeart {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(1);
+      }
+      25% {
+        opacity: 1;
+        transform: translateY(-50px) scale(1.2);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-200px) scale(0.8);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .envelope {
+        width: 90%;
+        height: 140px;
       }
 
-      .cat-container {
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
+      .cat {
+        width: 70px;
       }
     }
   </style>
 </head>
 <body>
 
-<!-- Floating Persian Cat -->
-<div class="cat-container">
-  <img src="https://i.ibb.co/qmKPnPr/blue-cat.png" alt="Cute Persian Cat">
-</div>
+  <!-- Entrance screen -->
+  <div class="entrance" id="entrance">
+    <h1>Hi Jaana 💖</h1>
+    <p>Tap below to open the envelopes of my heart</p>
+    <button onclick="enterLove()">Open Love Letters 💌</button>
+  </div>
 
-<!-- Entrance Screen -->
-<div class="entrance" id="entrance">
-  <h1>For My Jaana 💌</h1>
-  <button onclick="startExperience()">Tap to Begin</button>
-</div>
+  <!-- Main content -->
+  <div class="container" id="container">
+    <h1>Open When...</h1>
+    <p class="subtitle">Click any envelope to read my heart 💌</p>
 
-<!-- Envelope Container -->
-<div class="container" id="envelopes">
+    <div class="envelopes">
+      <!-- Repeat for 10 envelopes -->
+      <div class="envelope" onclick="this.classList.toggle('opened')">
+        <div class="envelope-inner">
+          <div class="front">You miss me</div>
+          <div class="back">When you're missing me, remember: my arms miss you more. I’m always with you, Jaana.</div>
+        </div>
+      </div>
 
-  <!-- Envelope 1 -->
-  <div class="envelope-wrapper" onclick="this.querySelector('.envelope').classList.toggle('open')">
-    <div class="envelope">
-      <div class="envelope-front">You miss me</div>
-      <div class="envelope-back">
-        <p>Jaana, when you're missing me, just remember: my arms miss you more. I carry the scent of your kurta, the warmth of our first date, and every moment with you in my heartbeat. I am always close, even when we’re far.</p>
+      <div class="envelope" onclick="this.classList.toggle('opened')">
+        <div class="envelope-inner">
+          <div class="front">You're sad</div>
+          <div class="back">If you're sad, I wish I could hold you. My love is a blanket you can always wrap in.</div>
+        </div>
+      </div>
+
+      <div class="envelope" onclick="this.classList.toggle('opened')">
+        <div class="envelope-inner">
+          <div class="front">You're stressed</div>
+          <div class="back">Close your eyes. Breathe. Let my voice guide you. You’ve got this, meri jaan.</div>
+        </div>
+      </div>
+
+      <div class="envelope" onclick="this.classList.toggle('opened')">
+        <div class="envelope-inner">
+          <div class="front">You feel alone</div>
+          <div class="back">Even when you're alone, my love surrounds you. Always with you, in every breath.</div>
+        </div>
+      </div>
+
+      <div class="envelope" onclick="this.classList.toggle('opened')">
+        <div class="envelope-inner">
+          <div class="front">You need strength</div>
+          <div class="back">You are my strong girl. My warrior. You carry galaxies in your soul.</div>
+        </div>
+      </div>
+
+      <div class="envelope" onclick="this.classList.toggle('opened')">
+        <div class="envelope-inner">
+          <div class="front">You're angry at me</div>
+          <div class="back">If I hurt you, I am sorry. Never out of lack of love — only out of longing. Please forgive me.</div>
+        </div>
+      </div>
+
+      <div class="envelope" onclick="this.classList.toggle('opened')">
+        <div class="envelope-inner">
+          <div class="front">You're remembering us</div>
+          <div class="back">Our memories are not in the past. They are alive — and waiting to bloom again.</div>
+        </div>
+      </div>
+
+      <div class="envelope" onclick="this.classList.toggle('opened')">
+        <div class="envelope-inner">
+          <div class="front">You can't sleep</div>
+          <div class="back">Pretend my chest is your pillow. My heartbeat is your lullaby. Sleep, meri jaan.</div>
+        </div>
+      </div>
+
+      <div class="envelope" onclick="this.classList.toggle('opened')">
+        <div class="envelope-inner">
+          <div class="front">You need to smile</div>
+          <div class="back">Remember my silly faces? You laughed. You glowed. That light is still inside you.</div>
+        </div>
+      </div>
+
+      <div class="envelope" onclick="this.classList.toggle('opened')">
+        <div class="envelope-inner">
+          <div class="front">You need love</div>
+          <div class="back">This is it. My soul, poured into every word. You are my forever, my jaan.</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Envelope 2 -->
-  <div class="envelope-wrapper" onclick="this.querySelector('.envelope').classList.toggle('open')">
-    <div class="envelope">
-      <div class="envelope-front">You're sad</div>
-      <div class="envelope-back">
-        <p>When you're sad, I wish I could hold your hand and wipe away your tears. You are not alone. Your star above the ocean is still watching, still shining, still loving. This pain will pass, but my love won't.</p>
-      </div>
-    </div>
-  </div>
+  <!-- Floating Cat -->
+  <img src="https://i.imgur.com/HRzA6Cz.png" alt="Persian Cat" class="cat" />
 
-  <!-- Envelope 3 -->
-  <div class="envelope-wrapper" onclick="this.querySelector('.envelope').classList.toggle('open')">
-    <div class="envelope">
-      <div class="envelope-front">You're stressed</div>
-      <div class="envelope-back">
-        <p>Take a deep breath, my love. Close your eyes and imagine my hands holding your cheeks gently. You’ve faced so much already, and you've made it through. I’m proud of you. Always.</p>
-      </div>
-    </div>
-  </div>
+  <!-- Floating hearts -->
+  <script>
+    function enterLove() {
+      document.getElementById('entrance').style.display = 'none';
+      document.getElementById('container').style.display = 'block';
+    }
 
-  <!-- Envelope 4 -->
-  <div class="envelope-wrapper" onclick="this.querySelector('.envelope').classList.toggle('open')">
-    <div class="envelope">
-      <div class="envelope-front">You feel alone</div>
-      <div class="envelope-back">
-        <p>Aloneness is just an illusion. In every room you enter, my love follows. Even when I’m not beside you, my thoughts stay wrapped around you like a soft whisper. You are never truly alone, Jaana.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Envelope 5 -->
-  <div class="envelope-wrapper" onclick="this.querySelector('.envelope').classList.toggle('open')">
-    <div class="envelope">
-      <div class="envelope-front">You need strength</div>
-      <div class="envelope-back">
-        <p>Look how far you’ve come, my brave girl. You have survived every battle. If ever you doubt yourself, know this — I believe in you more than I’ve ever believed in anything. You are my warrior wrapped in softness.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Envelope 6 -->
-  <div class="envelope-wrapper" onclick="this.querySelector('.envelope').classList.toggle('open')">
-    <div class="envelope">
-      <div class="envelope-front">You're angry at me</div>
-      <div class="envelope-back">
-        <p>If I ever hurt you, I’m deeply sorry. Never was it out of lack of love, only the ache of not being near you. I’ll always want to understand you more, love you better, and hold you through every storm.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Envelope 7 -->
-  <div class="envelope-wrapper" onclick="this.querySelector('.envelope').classList.toggle('open')">
-    <div class="envelope">
-      <div class="envelope-front">You're remembering us</div>
-      <div class="envelope-back">
-        <p>Our first kiss watching <em>Laila Majnu</em>, our first beer on that rooftop, the smell of your kurta — it all lives in me. Those days weren’t just memories, they were magic. And they’ll return, stronger and brighter.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Envelope 8 -->
-  <div class="envelope-wrapper" onclick="this.querySelector('.envelope').classList.toggle('open')">
-    <div class="envelope">
-      <div class="envelope-front">You can't sleep</div>
-      <div class="envelope-back">
-        <p>Close your eyes, Jaana. Imagine my heartbeat as your lullaby. My fingers tracing your back, my nose in your hair. You're safe. You’re loved. I’m right here, whispering: “Sleep tight, meri jaan.”</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Envelope 9 -->
-  <div class="envelope-wrapper" onclick="this.querySelector('.envelope').classList.toggle('open')">
-    <div class="envelope">
-      <div class="envelope-front">You need to smile</div>
-      <div class="envelope-back">
-        <p>Remember that goofy face I made on the rooftop? Or when I wanted to buy the whole store for you? 😄 Jaana, your smile is the most powerful light I’ve known. Let me bring it back, again and again.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Envelope 10 -->
-  <div class="envelope-wrapper" onclick="this.querySelector('.envelope').classList.toggle('open')">
-    <div class="envelope">
-      <div class="envelope-front">You need love</div>
-      <div class="envelope-back">
-        <p>This is where my words end and my heart speaks. You are my only jaan. The ocean may be wide, the night may be long — but your star still shines, always waiting, always yours. 💖</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  function startExperience() {
-    const entrance = document.getElementById('entrance');
-    const envelopes = document.getElementById('envelopes');
-    entrance.style.opacity = '0';
-    setTimeout(() => {
-      entrance.style.display = 'none';
-      envelopes.style.display = 'flex';
-    }, 1000);
-  }
-</script>
-
+    // Generate floating hearts
+    for (let i = 0; i < 30; i++) {
+      let heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.top = Math.random() * 100 + "vh";
+      heart.style.animationDuration = (3 + Math.random() * 2) + "s";
+      document.body.appendChild(heart);
+    }
+  </script>
 </body>
 </html>
