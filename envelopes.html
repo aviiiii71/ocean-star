@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Open When... — For Jaana</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ffe6e6, #fff5f5);
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #333;
+    }
+
+    h1 {
+      margin: 30px 0 10px;
+      color: #cc3366;
+      font-size: 2.5em;
+    }
+
+    p.subtitle {
+      font-style: italic;
+      margin-bottom: 40px;
+      color: #666;
+    }
+
+    .envelopes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      padding: 0 20px 60px;
+    }
+
+    .envelope {
+      width: 220px;
+      height: 160px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .envelope-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .envelope.flipped .envelope-inner {
+      transform: rotateY(180deg);
+    }
+
+    .front, .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    .front {
+      background: #ff99aa;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .back {
+      background: #fff;
+      color: #444;
+      transform: rotateY(180deg);
+      text-align: left;
+      overflow-y: auto;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .back p {
+      margin: 0;
+    }
+
+    @media (max-width: 600px) {
+      .envelope {
+        width: 90%;
+        height: 160px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Open When...</h1>
+  <p class="subtitle">Click any envelope to read my heart 💌</p>
+
+  <div class="envelopes">
+
+    <div class="envelope" onclick="this.classList.toggle('flipped')">
+      <div class="envelope-inner">
+        <div class="front">You miss me</div>
+        <div class="back"><p>Jaana, when you're missing me, just remember: my arms miss you more. I carry the scent of your kurta, the warmth of our first date, and every moment with you in my heartbeat. I am always close, even when we’re far.</p></div>
+      </div>
+    </div>
+
+    <div class="envelope" onclick="this.classList.toggle('flipped')">
+      <div class="envelope-inner">
+        <div class="front">You're sad</div>
+        <div class="back"><p>When you're sad, I wish I could hold your hand and wipe away your tears. You are not alone. Your star above the ocean is still watching, still shining, still loving. This pain will pass, but my love won't.</p></div>
+      </div>
+    </div>
+
+    <div class="envelope" onclick="this.classList.toggle('flipped')">
+      <div class="envelope-inner">
+        <div class="front">You're stressed</div>
+        <div class="back"><p>Take a deep breath, my love. Close your eyes and imagine my hands holding your cheeks gently. You’ve faced so much already, and you've made it through. I’m proud of you. Always.</p></div>
+      </div>
+    </div>
+
+    <div class="envelope" onclick="this.classList.toggle('flipped')">
+      <div class="envelope-inner">
+        <div class="front">You feel alone</div>
+        <div class="back"><p>Aloneness is just an illusion. In every room you enter, my love follows. Even when I’m not beside you, my thoughts stay wrapped around you like a soft whisper. You are never truly alone, Jaana.</p></div>
+      </div>
+    </div>
+
+    <div class="envelope" onclick="this.classList.toggle('flipped')">
+      <div class="envelope-inner">
+        <div class="front">You need strength</div>
+        <div class="back"><p>Look how far you’ve come, my brave girl. You have survived every battle. If ever you doubt yourself, know this — I believe in you more than I’ve ever believed in anything. You are my warrior wrapped in softness.</p></div>
+      </div>
+    </div>
+
+    <div class="envelope" onclick="this.classList.toggle('flipped')">
+      <div class="envelope-inner">
+        <div class="front">You're angry at me</div>
+        <div class="back"><p>If I ever hurt you, I’m deeply sorry. Never was it out of lack of love, only the ache of not being near you. I’ll always want to understand you more, love you better, and hold you through every storm.</p></div>
+      </div>
+    </div>
+
+    <div class="envelope" onclick="this.classList.toggle('flipped')">
+      <div class="envelope-inner">
+        <div class="front">You're remembering us</div>
+        <div class="back"><p>Our first kiss watching *Laila Majnu*, our first beer on that rooftop, the smell of your kurta — it all lives in me. Those days weren’t just memories, they were magic. And they’ll return, stronger and brighter.</p></div>
+      </div>
+    </div>
+
+    <div class="envelope" onclick="this.classList.toggle('flipped')">
+      <div class="envelope-inner">
+        <div class="front">You can't sleep</div>
+        <div class="back"><p>Close your eyes, Jaana. Imagine my heartbeat as your lullaby. My fingers tracing your back, my nose in your hair. You're safe. You’re loved. I’m right here, whispering: “Sleep tight, meri jaan.”</p></div>
+      </div>
+    </div>
+
+    <div class="envelope" onclick="this.classList.toggle('flipped')">
+      <div class="envelope-inner">
+        <div class="front">You need to smile</div>
+        <div class="back"><p>Remember that goofy face I made on the rooftop? Or when I wanted to buy the whole store for you? 😄 Jaana, your smile is the most powerful light I’ve known. Let me bring it back, again and again.</p></div>
+      </div>
+    </div>
+
+    <div class="envelope" onclick="this.classList.toggle('flipped')">
+      <div class="envelope-inner">
+        <div class="front">You need love</div>
+        <div class="back"><p>This is where my words end and my heart speaks. You are my only jaan. The ocean may be wide, the night may be long — but your star still shines, always waiting, always yours. 💖</p></div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
