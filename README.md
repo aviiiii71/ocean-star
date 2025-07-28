@@ -10,7 +10,39 @@
       padding: 0;
       background: linear-gradient(to bottom right, #ffe6f0, #f9f0ff);
       font-family: 'Segoe UI', sans-serif;
-      overflow-x: hidden;
+      overflow: hidden;
+    }
+
+    #entrance {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #ffd6e0, #e6e6ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+
+    #entrance h1 {
+      font-size: 3em;
+      color: #cc3366;
+      margin-bottom: 20px;
+    }
+
+    #entrance button {
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      background-color: #ff6699;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+
+    #mainContent {
+      display: none;
     }
 
     h1 {
@@ -133,35 +165,59 @@
   </style>
 </head>
 <body>
-  <h1>Open When... 💌</h1>
-
-  <div class="envelope-grid">
-    <div class="envelope-container" onclick="openEnvelope(this, 0)">
-      <div class="envelope">
-        <div class="message">When you're missing me, know this: I miss you more, I feel you more, I love you more than words can say. 💖</div>
-      </div>
-    </div>
-    <div class="envelope-container" onclick="openEnvelope(this, 1)">
-      <div class="envelope">
-        <div class="message">When you're sad, remember my hugs are wrapped in this message. You are my sunshine, even on cloudy days. 🌧️☀️</div>
-      </div>
-    </div>
-    <div class="envelope-container" onclick="openEnvelope(this, 2)">
-      <div class="envelope">
-        <div class="message">When you're scared, feel my arms holding you from afar. You are never alone, jaan. 🌙</div>
-      </div>
-    </div>
-    <!-- Add more envelopes here similarly -->
+  <div id="entrance">
+    <h1>For You, My Love 💖</h1>
+    <button onclick="startExperience()">Click to Begin</button>
   </div>
 
-  <div class="sparkles" id="sparkles"></div>
-  <img src="https://cdn.pixabay.com/photo/2023/04/09/21/21/cat-7911825_1280.png" class="cat" />
-  <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2023/03/15/audio_51e3c989d3.mp3?filename=romantic-piano-144998.mp3" type="audio/mpeg" />
-  </audio>
+  <div id="mainContent">
+    <h1>Open When... 💌</h1>
+
+    <div class="envelope-grid" id="envelopes"></div>
+    <div class="sparkles" id="sparkles"></div>
+    <img src="https://cdn.pixabay.com/photo/2023/04/09/21/21/cat-7911825_1280.png" class="cat" />
+    <audio autoplay loop>
+      <source src="https://cdn.pixabay.com/download/audio/2023/03/15/audio_51e3c989d3.mp3?filename=romantic-piano-144998.mp3" type="audio/mpeg" />
+    </audio>
+  </div>
 
   <script>
-    function openEnvelope(el, i) {
+    const messages = [
+      "When you're missing me, know this: I miss you more, I feel you more, I love you more than words can say. 💖",
+      "When you're sad, remember my hugs are wrapped in this message. You are my sunshine, even on cloudy days. 🌧️☀️",
+      "When you're scared, feel my arms holding you from afar. You are never alone, jaan. 🌙",
+      "When you wake up, know I’m already thinking of you. Good morning, my heartbeat. ☀️",
+      "When it's late and quiet, I’m whispering 'I love you' to the moon just for you. 🌕💫",
+      "When you feel unloved, remember this letter was made with pure love. You're my everything. 💞",
+      "When you smile, the world feels right again. Your happiness is my favorite melody. 🎵",
+      "When we're far, close your eyes — my kiss is already on your forehead. 😘",
+      "When you're lost, follow the stars — they all lead to me and my love for you. ✨",
+      "When it's our day again, I’ll hold you tighter and never let go. I promise. 💍"
+    ];
+
+    function startExperience() {
+      document.getElementById("entrance").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+      renderEnvelopes();
+      generateSparkles();
+    }
+
+    function renderEnvelopes() {
+      const container = document.getElementById("envelopes");
+      messages.forEach((msg, i) => {
+        const wrap = document.createElement("div");
+        wrap.className = "envelope-container";
+        wrap.setAttribute("onclick", `openEnvelope(this)`);
+        wrap.innerHTML = `
+          <div class="envelope">
+            <div class="message">${msg}</div>
+          </div>
+        `;
+        container.appendChild(wrap);
+      });
+    }
+
+    function openEnvelope(el) {
       if (el.classList.contains('opened')) return;
       el.classList.add('opened');
       const env = el.querySelector('.envelope');
@@ -198,8 +254,6 @@
         sparkleArea.appendChild(s);
       }
     }
-
-    generateSparkles();
   </script>
 </body>
 </html>
