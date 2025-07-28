@@ -1,285 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Open When... 💌</title>
+  <meta charset="UTF-8">
+  <title>Open When – For Jaana</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #fff1f5, #fef6f9);
+      padding: 0;
+      background: linear-gradient(to bottom right, #dbcdf0, #d0f0ef);
+      font-family: 'Segoe UI', cursive;
       overflow-x: hidden;
     }
 
-    .entrance {
-      position: fixed;
-      z-index: 999;
-      background: linear-gradient(to right, #ffdde1, #ee9ca7);
-      width: 100%;
-      height: 100vh;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
+    h1 {
       text-align: center;
+      color: #a84877;
+      padding: 20px;
+      font-size: 2em;
     }
 
-    .entrance h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-    }
-
-    .entrance button {
-      padding: 15px 30px;
-      font-size: 1.2em;
-      background: white;
-      color: #cc3366;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .entrance button:hover {
-      background: #ffe6ec;
-    }
-
-    .container {
-      display: none;
-      padding: 30px 20px 80px;
-      text-align: center;
-    }
-
-    .container h1 {
-      font-size: 2.5em;
-      color: #cc3366;
-    }
-
-    .subtitle {
-      font-style: italic;
-      margin-bottom: 40px;
-      color: #555;
-    }
-
-    .envelopes {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 25px;
+    .envelope-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      justify-items: center;
+      padding: 30px;
     }
 
     .envelope {
-      width: 200px;
-      height: 150px;
+      width: 100px;
+      height: 70px;
+      background: #fcdada;
+      border: 2px solid #efb0c9;
+      border-radius: 6px;
       position: relative;
-      perspective: 1000px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .envelope:hover {
+      transform: scale(1.1);
+    }
+
+    .envelope::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(135deg, transparent 50%, #efb0c9 50%),
+        linear-gradient(-135deg, transparent 50%, #efb0c9 50%);
+      background-repeat: no-repeat;
+      background-size: 50% 50%;
+      background-position: top left, top right;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .modal-content {
+      background: #fff0f5;
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      font-size: 1.1em;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 24px;
       cursor: pointer;
     }
 
-    .envelope-inner {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transition: transform 1s;
-      transform-style: preserve-3d;
-    }
-
-    .envelope.opened .envelope-inner {
-      transform: rotateX(180deg);
-    }
-
-    .front, .back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      box-sizing: border-box;
-      font-size: 15px;
-    }
-
-    .front {
-      background: #f9b3c2;
-      color: white;
-      font-weight: bold;
-    }
-
-    .back {
-      background: white;
-      transform: rotateX(180deg);
-      color: #333;
-      line-height: 1.4;
-      overflow-y: auto;
-    }
-
-    /* Cat animation */
     .cat {
-      position: fixed;
-      width: 100px;
-      bottom: 20px;
-      left: -120px;
-      z-index: 1;
-      animation: moveCat 20s linear infinite;
-    }
-
-    @keyframes moveCat {
-      0% { left: -120px; transform: scaleX(1); }
-      50% { left: calc(100% + 120px); transform: scaleX(1); }
-      50.01% { transform: scaleX(-1); }
-      100% { left: -120px; transform: scaleX(-1); }
-    }
-
-    .heart {
+      width: 120px;
       position: absolute;
-      width: 20px;
-      height: 20px;
-      background: pink;
-      border-radius: 50%;
-      animation: floatHeart 5s infinite ease-in-out;
-      z-index: 0;
+      bottom: 0;
+      left: -150px;
+      animation: walk 30s linear infinite;
     }
 
-    @keyframes floatHeart {
-      0% {
-        opacity: 0;
-        transform: translateY(0) scale(1);
-      }
-      25% {
-        opacity: 1;
-        transform: translateY(-50px) scale(1.2);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-200px) scale(0.8);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .envelope {
-        width: 90%;
-        height: 140px;
-      }
-
-      .cat {
-        width: 70px;
-      }
+    @keyframes walk {
+      0% { left: -150px; }
+      50% { left: 100%; transform: scaleX(1); }
+      50.1% { transform: scaleX(-1); }
+      100% { left: -150px; transform: scaleX(-1); }
     }
   </style>
 </head>
 <body>
 
-  <!-- Entrance screen -->
-  <div class="entrance" id="entrance">
-    <h1>Hi Jaana 💖</h1>
-    <p>Tap below to open the envelopes of my heart</p>
-    <button onclick="enterLove()">Open Love Letters 💌</button>
+  <h1>💌 Click an Envelope, Jaana 💌</h1>
+
+  <div class="envelope-grid">
+    <div class="envelope" data-id="0" title="Open When You're Sad"></div>
+    <div class="envelope" data-id="1" title="About Distance & Pain"></div>
+    <!-- Add more envelopes if needed -->
   </div>
 
-  <!-- Main content -->
-  <div class="container" id="container">
-    <h1>Open When...</h1>
-    <p class="subtitle">Click any envelope to read my heart 💌</p>
+  <img src="https://i.imgur.com/L6kVl5I.png" alt="Cat" class="cat">
 
-    <div class="envelopes">
-      <!-- Repeat for 10 envelopes -->
-      <div class="envelope" onclick="this.classList.toggle('opened')">
-        <div class="envelope-inner">
-          <div class="front">You miss me</div>
-          <div class="back">When you're missing me, remember: my arms miss you more. I’m always with you, Jaana.</div>
-        </div>
-      </div>
-
-      <div class="envelope" onclick="this.classList.toggle('opened')">
-        <div class="envelope-inner">
-          <div class="front">You're sad</div>
-          <div class="back">If you're sad, I wish I could hold you. My love is a blanket you can always wrap in.</div>
-        </div>
-      </div>
-
-      <div class="envelope" onclick="this.classList.toggle('opened')">
-        <div class="envelope-inner">
-          <div class="front">You're stressed</div>
-          <div class="back">Close your eyes. Breathe. Let my voice guide you. You’ve got this, meri jaan.</div>
-        </div>
-      </div>
-
-      <div class="envelope" onclick="this.classList.toggle('opened')">
-        <div class="envelope-inner">
-          <div class="front">You feel alone</div>
-          <div class="back">Even when you're alone, my love surrounds you. Always with you, in every breath.</div>
-        </div>
-      </div>
-
-      <div class="envelope" onclick="this.classList.toggle('opened')">
-        <div class="envelope-inner">
-          <div class="front">You need strength</div>
-          <div class="back">You are my strong girl. My warrior. You carry galaxies in your soul.</div>
-        </div>
-      </div>
-
-      <div class="envelope" onclick="this.classList.toggle('opened')">
-        <div class="envelope-inner">
-          <div class="front">You're angry at me</div>
-          <div class="back">If I hurt you, I am sorry. Never out of lack of love — only out of longing. Please forgive me.</div>
-        </div>
-      </div>
-
-      <div class="envelope" onclick="this.classList.toggle('opened')">
-        <div class="envelope-inner">
-          <div class="front">You're remembering us</div>
-          <div class="back">Our memories are not in the past. They are alive — and waiting to bloom again.</div>
-        </div>
-      </div>
-
-      <div class="envelope" onclick="this.classList.toggle('opened')">
-        <div class="envelope-inner">
-          <div class="front">You can't sleep</div>
-          <div class="back">Pretend my chest is your pillow. My heartbeat is your lullaby. Sleep, meri jaan.</div>
-        </div>
-      </div>
-
-      <div class="envelope" onclick="this.classList.toggle('opened')">
-        <div class="envelope-inner">
-          <div class="front">You need to smile</div>
-          <div class="back">Remember my silly faces? You laughed. You glowed. That light is still inside you.</div>
-        </div>
-      </div>
-
-      <div class="envelope" onclick="this.classList.toggle('opened')">
-        <div class="envelope-inner">
-          <div class="front">You need love</div>
-          <div class="back">This is it. My soul, poured into every word. You are my forever, my jaan.</div>
-        </div>
-      </div>
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div id="letterText"></div>
     </div>
   </div>
 
-  <!-- Floating Cat -->
-  <img src="https://i.imgur.com/HRzA6Cz.png" alt="Persian Cat" class="cat" />
-
-  <!-- Floating hearts -->
   <script>
-    function enterLove() {
-      document.getElementById('entrance').style.display = 'none';
-      document.getElementById('container').style.display = 'block';
-    }
+    const letters = [
+      `My Jaana, My Shining Star,<br><br>
+      If your heart feels heavy today, I want this letter to hold it for a while.
+      You always try to be strong — but even the stars deserve to rest.
+      On days when your eyes are teary and the world feels too loud,
+      I hope you remember that you’re never truly alone...<br><br>
+      (more of your message here)
+      `,
 
-    // Generate floating hearts
-    for (let i = 0; i < 30; i++) {
-      let heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.top = Math.random() * 100 + "vh";
-      heart.style.animationDuration = (3 + Math.random() * 2) + "s";
-      document.body.appendChild(heart);
+      `Jaana, Please Read With Your Heart<br><br>
+      I know this is not easy. For either of us.
+      The distance. The changes. The fights. The ache. The helplessness...
+      But still, with all of that, we are here.
+      Breathing, hoping, holding on to the tiny pieces of what we believe in.
+      You matter. This matters...<br><br>
+      (more of your message here)
+      `
+    ];
+
+    const envelopes = document.querySelectorAll('.envelope');
+    const modal = document.getElementById('modal');
+    const letterText = document.getElementById('letterText');
+
+    envelopes.forEach(env => {
+      env.addEventListener('click', () => {
+        const id = env.getAttribute('data-id');
+        letterText.innerHTML = letters[id];
+        modal.style.display = 'flex';
+      });
+    });
+
+    function closeModal() {
+      modal.style.display = 'none';
     }
   </script>
+
 </body>
 </html>
+
