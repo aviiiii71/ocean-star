@@ -57,13 +57,13 @@
       flex-wrap: wrap;
       justify-content: center;
       padding: 30px;
-      gap: 30px;
+      gap: 40px;
     }
 
     .envelope-container {
       position: relative;
-      width: 200px;
-      height: 140px;
+      width: 280px;
+      height: 220px;
       cursor: pointer;
       perspective: 1000px;
     }
@@ -81,16 +81,16 @@
 
     .envelope-label {
       position: absolute;
-      top: 10px;
+      top: 12px;
       left: 0;
       width: 100%;
       text-align: center;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
       color: #cc3366;
       z-index: 3;
       background: #ffccd5;
-      padding: 5px 0;
+      padding: 6px 0;
     }
 
     .envelope:before {
@@ -114,16 +114,20 @@
 
     .message {
       opacity: 0;
-      padding: 15px;
+      padding: 40px 25px 25px 25px;
       background: #fff;
       height: 100%;
-      font-size: 14px;
-      line-height: 1.5;
+      font-size: 16px;
+      line-height: 1.8;
       color: #333;
       overflow: hidden;
       z-index: 1;
       position: relative;
       border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
     .envelope.open .message {
@@ -180,96 +184,4 @@
   </style>
 </head>
 <body>
-  <div id="entrance">
-    <h1>For You, My Love 💖</h1>
-    <button onclick="startExperience()">Click to Begin</button>
-  </div>
-
-  <div id="mainContent">
-    <h1>Open When... 💌</h1>
-
-    <div class="envelope-grid" id="envelopes"></div>
-    <div class="sparkles" id="sparkles"></div>
-    <img src="https://cdn.pixabay.com/photo/2023/04/09/21/21/cat-7911825_1280.png" class="cat" />
-    <audio autoplay loop>
-      <source src="https://cdn.pixabay.com/download/audio/2023/03/15/audio_51e3c989d3.mp3?filename=romantic-piano-144998.mp3" type="audio/mpeg" />
-    </audio>
-  </div>
-
-  <script>
-    const messages = [
-      { label: "Feeling Lonely", text: "When you're missing me, know this: I miss you more, I feel you more, I love you more than words can say. 💖" },
-      { label: "Feeling Sad", text: "When you're sad, remember my hugs are wrapped in this message. You are my sunshine, even on cloudy days. 🌧️☀️" },
-      { label: "Feeling Scared", text: "When you're scared, feel my arms holding you from afar. You are never alone, jaan. 🌙" },
-      { label: "Waking Up", text: "When you wake up, know I’m already thinking of you. Good morning, my heartbeat. ☀️" },
-      { label: "Late Night Thoughts", text: "When it's late and quiet, I’m whispering 'I love you' to the moon just for you. 🌕💫" },
-      { label: "Feeling Unloved", text: "When you feel unloved, remember this letter was made with pure love. You're my everything. 💞" },
-      { label: "Feeling Happy", text: "When you smile, the world feels right again. Your happiness is my favorite melody. 🎵" },
-      { label: "Missing My Kiss", text: "When we're far, close your eyes — my kiss is already on your forehead. 😘" },
-      { label: "Feeling Lost", text: "When you're lost, follow the stars — they all lead to me and my love for you. ✨" },
-      { label: "Our Day Comes", text: "When it's our day again, I’ll hold you tighter and never let go. I promise. 💍" }
-    ];
-
-    function startExperience() {
-      document.getElementById("entrance").style.display = "none";
-      document.getElementById("mainContent").style.display = "block";
-      renderEnvelopes();
-      generateSparkles();
-    }
-
-    function renderEnvelopes() {
-      const container = document.getElementById("envelopes");
-      messages.forEach(({ label, text }) => {
-        const wrap = document.createElement("div");
-        wrap.className = "envelope-container";
-        wrap.setAttribute("onclick", `openEnvelope(this)`);
-        wrap.innerHTML = `
-          <div class="envelope">
-            <div class="envelope-label">${label}</div>
-            <div class="message">${text}</div>
-          </div>
-        `;
-        container.appendChild(wrap);
-      });
-    }
-
-    function openEnvelope(el) {
-      if (el.classList.contains('opened')) return;
-      el.classList.add('opened');
-      const env = el.querySelector('.envelope');
-      env.classList.add('open');
-      createKiss(env);
-    }
-
-    function createKiss(parent) {
-      const kiss = document.createElement('div');
-      kiss.innerHTML = '💋';
-      kiss.style.position = 'absolute';
-      kiss.style.fontSize = '24px';
-      kiss.style.left = '50%';
-      kiss.style.top = '50%';
-      kiss.style.transform = 'translate(-50%, -50%)';
-      kiss.style.opacity = '0';
-      kiss.style.transition = 'all 2s ease';
-      parent.appendChild(kiss);
-      setTimeout(() => {
-        kiss.style.top = '-50px';
-        kiss.style.opacity = '1';
-      }, 10);
-      setTimeout(() => parent.removeChild(kiss), 3000);
-    }
-
-    function generateSparkles() {
-      const sparkleArea = document.getElementById('sparkles');
-      for (let i = 0; i < 40; i++) {
-        const s = document.createElement('div');
-        s.className = 'sparkle';
-        s.style.left = Math.random() * 100 + 'vw';
-        s.style.top = Math.random() * 100 + 'vh';
-        s.style.animationDelay = (Math.random() * 3) + 's';
-        sparkleArea.appendChild(s);
-      }
-    }
-  </script>
-</body>
-</html>
+  <!-- Remaining HTML will follow here -->
