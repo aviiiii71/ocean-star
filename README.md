@@ -171,7 +171,56 @@
       0% { left: -120px; }
       100% { left: 100%; }
     }
-  </style>
+      .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: #fffafc;
+      border-radius: 15px;
+      max-width: 600px;
+      width: 80%;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      font-family: 'Sacramento', cursive;
+      font-size: 1.6em;
+      color: #333;
+      text-align: center;
+      position: relative;
+      animation: penWrite 1.5s ease-in-out;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 1.2em;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #888;
+    }
+
+    .modal-text {
+      animation: typingEffect 3s steps(40, end);
+      white-space: pre-wrap;
+      overflow: hidden;
+      border-right: 2px solid #333;
+    }
+
+    @keyframes typingEffect {
+      0% { width: 0; }
+      100% { width: 100%; }
+    }
 </head>
 <body>
 <div class="welcome">
@@ -180,130 +229,130 @@
 </div>
 
 <div class="envelopes" id="envelopes">
-  <div class="envelope love">
-  <h3>Open When You're Feeling Loved 💖</h3>
-  <p>Remember our first movie date? You wore that white dress and I couldn’t take my eyes off you. I felt love blooming right then and there. That’s the kind of love I carry for you—deep, pure, and forever.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope sad">
-  <h3>Open When You're Feeling Sad 🌧️</h3>
-  <p>Remember that time we sat quietly at our lake spot, the world silent except our hearts? Even in your sadness, I am with you. Let my words wrap around you like the hug from that temple lift.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope angry">
-  <h3>Open When You're Angry 🗯️</h3>
-  <p>Maybe you're thinking of when I made you wait, or said something wrong. But love, every fight only makes me want to hold you tighter. Like how we found each other after the tuition drama—I’ll always come back to you.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope excited">
-  <h3>Open When You're Excited 🌞</h3>
-  <p>Like that time we played snooker and laughed till our cheeks hurt—your joy is my joy. Whatever’s making your heart race right now, I’m celebrating it with you from the stars to the ocean.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope lonely">
-  <h3>Open When You're Feeling Lonely 🌙</h3>
-  <p>Close your eyes and think of that night at the rooftop after the vodka sip. Our first kiss—soft, shy, perfect. In your loneliness, remember I’m always just a heartbeat away.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope sleepy">
-  <h3>Open When You're Sleepy 😴</h3>
-  <p>Remember dozing off on my shoulder after go-karting? That peace, that warmth—I wish I could tuck you in every night. Sweet dreams, jaan. I’m hugging you in spirit.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope flirty">
-  <h3>Open When You're Feeling Flirty 😘</h3>
-  <p>Hey beautiful. Remember teasing me at Baskin Robbins with your ice cream smile? That’s the charm that melts me. Come here, I owe you a flying kiss 💋</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope apology">
-  <h3>Open When You Need Forgiveness 🥺</h3>
-  <p>If I ever made you feel alone—like that call log day—I’m sorry from my soul. You mean more than any fear or rule. My love, I’ll spend my life making it up to you.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope lazy">
-  <h3>Open When You're Feeling Lazy ☕</h3>
-  <p>Let’s lay down at our lake again, no words, just us. Like that quiet evening when our souls spoke louder than any conversation. You and me, that’s all we need.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope special">
-  <h3>Open On A Special Day ✨</h3>
-  <p>One year. 31 moments. Infinite emotions. From the first scooty ride to this webpage, every second has been you. My Jaana, my forever, my magic. Happy anniversary. 💖</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope love">
-  <h3>Open When You're Missing Me 💌</h3>
-  <p>Think of us at that secret lake spot, where time slowed and hearts spoke. Every heartbeat of mine whispers your name when you’re not near. I'm missing you too, Jaana.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope sad">
-  <h3>Open When You're Overthinking 🎧</h3>
-  <p>Remember how we sat on the scooty and just watched the world? Not every answer is needed now. You’re doing more than fine. Let go, and let me love you through it.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope apology">
-  <h3>Open When We've Had a Fight 💔</h3>
-  <p>We’ve had our share of tough moments—like the time we didn’t speak after tuition. But even then, you were all I could think about. I love you more after every storm.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope flirty">
-  <h3>Open When You Want a Virtual Kiss 😚</h3>
-  <p>Come a little closer. Like that day you leaned on me and whispered secrets—I want to press my lips to your forehead and say, 'Forever is ours.'</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope sleepy">
-  <h3>Open When You Can't Sleep 🌌</h3>
-  <p>Remember the night under stars after the movie? You laid on my shoulder and my world stopped. If sleep escapes you tonight, let my memory wrap around you softly.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope excited">
-  <h3>Open When Something Amazing Happens 🎉</h3>
-  <p>I can see that sparkle in your eyes, like when we first laughed in the blue city. I’m clapping from miles away. Tell me everything, I want to hear it all!</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope lonely">
-  <h3>Open When You're Far From Home 🏠</h3>
-  <p>Whether it’s across town or across the sky, home is in our memories. Like when I said I was your dad to get you out of tuition—wild, but worth it. I’d do anything to be near you.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope special">
-  <h3>Open When It's Our Anniversary 🎊</h3>
-  <p>One year since our souls collided. From scooty rides to secret spots, from laughter to love letters—Jaana, this journey is only beginning. Happy Anniversary, meri jaan.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope lazy">
-  <h3>Open When It's A Rainy Day 🌧️</h3>
-  <p>Rain reminds me of you—refreshing, warm, and full of meaning. I wish we were wrapped in a blanket right now, just watching it fall from our spot at the lake.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope apology">
-  <h3>Open When I Can’t Be With You 💭</h3>
-  <p>On days I can’t be near, remember the galaxy lamp night. You said it looked like our future. You were right. It’s bright, vast, and full of stars—just like my love for you.</p>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
 </div>
-  <div class="envelope love">
-    <h3>Open When You're Feeling Beautiful 💅</h3>
-    <p>You are a walking poem—gorgeous in every way. Never forget that.</p>
-  </div>
-  <div class="envelope excited">
-    <h3>Open When You Want to Dance 💃</h3>
-    <p>Turn the volume up. Let’s dance like we’re silly kids in love!</p>
-  </div>
-  <div class="envelope flirty">
-    <h3>Open When You Need Butterflies 🦋</h3>
-    <p>Thinking about our first hug, first kiss, first “I love you”… chills!</p>
-  </div>
-  <div class="envelope sleepy">
-    <h3>Open When It's Midnight 🌙</h3>
-    <p>Stars above, heart within. I’m lying awake loving you.</p>
-  </div>
-  <div class="envelope lonely">
-    <h3>Open When You Miss My Voice 📞</h3>
-    <p>Imagine this: I whisper your name, soft and slow… I love you.</p>
-  </div>
-  <div class="envelope love">
-    <h3>Open When You're Feeling Lucky 🍀</h3>
-    <p>We're not just lucky—we're fated. My heart was always yours.</p>
-  </div>
-  <div class="envelope special">
-    <h3>Open When You're Proud of Yourself 🏆</h3>
-    <p>YES! You did it, love. I knew you would. I’m bursting with pride.</p>
-  </div>
-  <div class="envelope sleepy">
-    <h3>Open When You Want A Bedtime Story 📖</h3>
-    <p>Once upon a time, you fell in love. And every day since, it’s grown deeper.</p>
-  </div>
-  <div class="envelope sad">
-    <h3>Open When You Feel Insecure 🪞</h3>
-    <p>Look into the mirror and see the soul I adore. You’re enough. Always.</p>
-  </div>
-  <div class="envelope flirty">
-    <h3>Open When You Need Spice 🌶️</h3>
-    <p>Warning: this letter contains kisses, flirty winks, and thoughts of you in my arms.</p>
-  </div>
-  <div class="envelope love">
-    <h3>Open When You're Grateful 🙏</h3>
-    <p>Let’s be thankful together—for fate, for love, for this beautiful journey.</p>
-  </div>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
+</div>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
+</div>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
+</div>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
+</div>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
+</div>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
+</div>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
+</div>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
+</div>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
+</div>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
+</div>
+  <div class="envelope">
+  <h3>$1</h3>
+  <p style="display:none;">$1</p>
+</div>
 </div>
 
 <img class="cat" src="https://i.imgur.com/XLQ7WDX.gif" alt="Walking Persian Cat" />
@@ -317,6 +366,43 @@
   function startStory() {
     document.querySelector('.welcome').style.display = 'none';
     document.getElementById('envelopes').style.display = 'grid';
+  }
+</script>
+<div class="modal" id="popup-modal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal()">❌</button>
+    <div id="modal-text" class="modal-text"></div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('popup-modal');
+  const modalText = document.getElementById('modal-text');
+
+  document.querySelectorAll('.envelope').forEach(env => {
+    const text = env.querySelector('p').textContent;
+    env.addEventListener('click', () => {
+      modalText.textContent = '';
+      modal.style.display = 'flex';
+      animateTyping(text);
+    });
+  });
+
+  function closeModal() {
+    modal.style.display = 'none';
+    modalText.textContent = '';
+  }
+
+  function animateTyping(text) {
+    let index = 0;
+    function typeChar() {
+      if (index < text.length) {
+        modalText.textContent += text.charAt(index);
+        index++;
+        setTimeout(typeChar, 40);
+      }
+    }
+    typeChar();
   }
 </script>
 </body>
