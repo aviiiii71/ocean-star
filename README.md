@@ -174,7 +174,151 @@
   </style>
 </head>
 <body>
-<!-- Envelope and script code to be added in the next part -->
+<div class="welcome">
+  <h1>From the Star Above the Ocean ❤️</h1>
+  <button class="begin-btn" onclick="startStory()">Begin</button>
+</div>
+
+<div class="envelopes" id="envelopes">
+  <div class="envelope love">
+    <h3>Open When You're Feeling Loved 💖</h3>
+    <p>You are the heart of my every heartbeat. You're deeply loved, forever and always.</p>
+  </div>
+  <div class="envelope sad">
+    <h3>Open When You're Feeling Sad 🌧️</h3>
+    <p>Let the sadness fall away like rain. My arms are always here, even in silence.</p>
+  </div>
+  <div class="envelope angry">
+    <h3>Open When You're Angry 🗯️</h3>
+    <p>Take a deep breath. I'm not here to fight—I'm here to understand and love you through it.</p>
+  </div>
+  <div class="envelope excited">
+    <h3>Open When You're Excited 🌞</h3>
+    <p>I can feel your glow from miles away! Celebrate everything—you make moments magical.</p>
+  </div>
+  <div class="envelope lonely">
+    <h3>Open When You're Feeling Lonely 🌙</h3>
+    <p>Close your eyes—I’m right there beside you. My love fills the space between us.</p>
+  </div>
+  <div class="envelope sleepy">
+    <h3>Open When You're Sleepy 😴</h3>
+    <p>Goodnight, my dream. I hope your sleep is as soft and warm as your hug.</p>
+  </div>
+  <div class="envelope flirty">
+    <h3>Open When You're Feeling Flirty 😘</h3>
+    <p>Hey you, gorgeous. Just thinking about you makes my heart race. Mwah!</p>
+  </div>
+  <div class="envelope apology">
+    <h3>Open When You Need Forgiveness 🥺</h3>
+    <p>No mistake can undo my love. Let's heal together, hand in hand, heart to heart.</p>
+  </div>
+  <div class="envelope lazy">
+    <h3>Open When You're Feeling Lazy ☕</h3>
+    <p>Let's do nothing together sometime. Even silence with you feels like music.</p>
+  </div>
+  <div class="envelope special">
+    <h3>Open On A Special Day ✨</h3>
+    <p>This day matters because you're in it. Here's to a memory worth holding forever.</p>
+  </div>
+  <div class="envelope love">
+    <h3>Open When You're Missing Me 💌</h3>
+    <p>Each second apart only brings us closer. My soul reaches out to you, always.</p>
+  </div>
+  <div class="envelope sad">
+    <h3>Open When You're Overthinking 🎧</h3>
+    <p>Quiet your mind, love. You don’t have to figure it all out now. Just breathe.</p>
+  </div>
+  <div class="envelope apology">
+    <h3>Open When We've Had a Fight 💔</h3>
+    <p>Our love is stronger than any disagreement. I'm here, willing, and loving you still.</p>
+  </div>
+  <div class="envelope flirty">
+    <h3>Open When You Want a Virtual Kiss 😚</h3>
+    <p>*mwah!* You’re irresistibly cute and mine forever.</p>
+  </div>
+  <div class="envelope sleepy">
+    <h3>Open When You Can't Sleep 🌌</h3>
+    <p>Count the stars, not your worries. I'm in your dreams tonight.</p>
+  </div>
+  <div class="envelope excited">
+    <h3>Open When Something Amazing Happens 🎉</h3>
+    <p>I knew you'd shine. Tell me everything—I want to celebrate your joy.</p>
+  </div>
+  <div class="envelope lonely">
+    <h3>Open When You're Far From Home 🏠</h3>
+    <p>No matter where you are, you're never alone. My love surrounds you.</p>
+  </div>
+  <div class="envelope special">
+    <h3>Open When It's Our Anniversary 🎊</h3>
+    <p>From the day we met, you’ve made the world brighter. Here's to forever.</p>
+  </div>
+  <div class="envelope lazy">
+    <h3>Open When It's A Rainy Day 🌧️</h3>
+    <p>Let’s curl up with memories and love letters. You and me, cozy forever.</p>
+  </div>
+  <div class="envelope apology">
+    <h3>Open When I Can’t Be With You 💭</h3>
+    <p>If I could fly to you right now, I would. But till then, this note is my hug.</p>
+  </div>
+  <div class="envelope love">
+    <h3>Open When You're Feeling Beautiful 💅</h3>
+    <p>You are a walking poem—gorgeous in every way. Never forget that.</p>
+  </div>
+  <div class="envelope excited">
+    <h3>Open When You Want to Dance 💃</h3>
+    <p>Turn the volume up. Let’s dance like we’re silly kids in love!</p>
+  </div>
+  <div class="envelope flirty">
+    <h3>Open When You Need Butterflies 🦋</h3>
+    <p>Thinking about our first hug, first kiss, first “I love you”… chills!</p>
+  </div>
+  <div class="envelope sleepy">
+    <h3>Open When It's Midnight 🌙</h3>
+    <p>Stars above, heart within. I’m lying awake loving you.</p>
+  </div>
+  <div class="envelope lonely">
+    <h3>Open When You Miss My Voice 📞</h3>
+    <p>Imagine this: I whisper your name, soft and slow… I love you.</p>
+  </div>
+  <div class="envelope love">
+    <h3>Open When You're Feeling Lucky 🍀</h3>
+    <p>We're not just lucky—we're fated. My heart was always yours.</p>
+  </div>
+  <div class="envelope special">
+    <h3>Open When You're Proud of Yourself 🏆</h3>
+    <p>YES! You did it, love. I knew you would. I’m bursting with pride.</p>
+  </div>
+  <div class="envelope sleepy">
+    <h3>Open When You Want A Bedtime Story 📖</h3>
+    <p>Once upon a time, you fell in love. And every day since, it’s grown deeper.</p>
+  </div>
+  <div class="envelope sad">
+    <h3>Open When You Feel Insecure 🪞</h3>
+    <p>Look into the mirror and see the soul I adore. You’re enough. Always.</p>
+  </div>
+  <div class="envelope flirty">
+    <h3>Open When You Need Spice 🌶️</h3>
+    <p>Warning: this letter contains kisses, flirty winks, and thoughts of you in my arms.</p>
+  </div>
+  <div class="envelope love">
+    <h3>Open When You're Grateful 🙏</h3>
+    <p>Let’s be thankful together—for fate, for love, for this beautiful journey.</p>
+  </div>
+</div>
+
+<img class="cat" src="https://i.imgur.com/XLQ7WDX.gif" alt="Walking Persian Cat" />
+
+<audio autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+  function startStory() {
+    document.querySelector('.welcome').style.display = 'none';
+    document.getElementById('envelopes').style.display = 'grid';
+  }
+</script>
 </body>
 </html>
 
