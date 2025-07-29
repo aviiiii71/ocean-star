@@ -4,24 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>From the star above the ocean</title>
-  <!-- Google Font for handwritten effect -->
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Canvas-Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <style>
     /*------------------------------------*
-      ROOT VARIABLES AND GLOBAL RESET
+      ROOT & VARIABLES
     *------------------------------------*/
     :root {
-      --primary-color: #d6336c;
-      --secondary-color: #fdeef4;
-      --accent-color: #e6a1b8;
-      --bg-gradient-start: #f8c8dc;
-      --bg-gradient-end: #fdeef4;
-      --envelope-gradient-start: #ffe1e8;
-      --envelope-gradient-end: #ffedef;
-      --font-handwriting: 'Dancing Script', cursive;
-      --font-sans: 'Poppins', sans-serif;
-      --transition-duration: 0.8s;
-      --drop-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      --color-primary: #d6336c;
+      --color-secondary: #fdeef4;
+      --color-accent: #e6a1b8;
+      --transition-speed: 0.7s;
+      --shadow-light: rgba(0,0,0,0.15);
     }
     *, *::before, *::after {
       box-sizing: border-box;
@@ -31,43 +27,103 @@
     html, body {
       width: 100%;
       height: 100%;
-      overflow: hidden;
-      background: #fff5f8;
-      font-family: var(--font-sans);
-      color: #333;
+      overflow: auto;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, var(--color-secondary), #fff5f8);
     }
 
     /*------------------------------------*
-      INTRO SCREEN STYLES
+      NAVIGATION & LAYOUT
     *------------------------------------*/
-    #intro {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+    #navbar {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+      gap: 1rem;
+      z-index: 1000;
+    }
+    .nav-btn {
+      padding: 0.5rem 1rem;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 2px solid var(--color-accent);
+      cursor: pointer;
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      color: var(--color-primary);
+      transition: background var(--transition-speed);
+    }
+    .nav-btn.active, .nav-btn:hover {
+      background: rgba(255,255,255,0.9);
+    }
+
+    /*------------------------------------*
+      PARALLAX BACKGROUND LAYERS (5 LAYERS)
+    *------------------------------------*/
+    .parallax-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-attachment: fixed;
+      will-change: transform;
+    }
+    #layer1 { background-image: url('layer1.png'); z-index: 1; opacity: 0.6; }
+    #layer2 { background-image: url('layer2.png'); z-index: 2; opacity: 0.5; }
+    #layer3 { background-image: url('layer3.png'); z-index: 3; opacity: 0.4; }
+    #layer4 { background-image: url('layer4.png'); z-index: 4; opacity: 0.3; }
+    #layer5 { background-image: url('layer5.png'); z-index: 5; opacity: 0.2; }
+
+    /*------------------------------------*
+      CANVAS SPARKLES
+    *------------------------------------*/
+    #sparkleCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
       z-index: 10;
     }
+
+    /*------------------------------------*
+      INTRO SCREEN
+    *------------------------------------*/
+    #intro {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      backdrop-filter: blur(5px);
+      z-index: 100;
+    }
     #intro h1 {
-      font-family: var(--font-handwriting);
-      font-size: 3rem;
-      color: var(--primary-color);
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-      margin-bottom: 1rem;
+      font-family: 'Dancing Script', cursive;
+      font-size: 4rem;
+      color: var(--color-primary);
+      text-shadow: 3px 3px 6px var(--shadow-light);
     }
     #intro button {
-      font-family: var(--font-sans);
+      margin-top: 1rem;
+      font-family: 'Playfair Display', serif;
       font-size: 1.2rem;
       padding: 1rem 2rem;
       border: none;
       border-radius: 30px;
-      background: var(--primary-color);
+      background: var(--color-primary);
       color: #fff;
       cursor: pointer;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 12px var(--shadow-light);
       transition: transform 0.2s;
     }
     #intro button:hover {
@@ -75,84 +131,71 @@
     }
 
     /*------------------------------------*
-      ENVELOPE GRID CONTAINER
+      LETTERS SECTION
     *------------------------------------*/
-    #envelopes {
+    #lettersSection {
       display: none;
       position: relative;
-      width: 100%; height: 100%;
-      padding: 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 1.5rem;
+      padding: 4rem 2rem;
       overflow-y: auto;
+      z-index: 100;
     }
-    /* Custom scrollbar for envelopes container */
-    #envelopes::-webkit-scrollbar {
-      width: 10px;
+    .envelope-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
     }
-    #envelopes::-webkit-scrollbar-track {
-      background: rgba(0,0,0,0.05);
-      border-radius: 5px;
-    }
-    #envelopes::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.1);
-      border-radius: 5px;
-    }
-
-    /*------------------------------------*
-      ENVELOPE COMPONENT STYLES
-    *------------------------------------*/
     .envelope {
-      width: 260px;
-      height: 160px;
-      perspective: 1000px;
-      position: relative;
+      perspective: 1200px;
       cursor: pointer;
-      filter: drop-shadow(var(--drop-shadow));
+      position: relative;
+      height: 0;
+      padding-bottom: 60%;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 0.2s ease;
     }
-    .envelope .flap,
-    .envelope .body {
+    .envelope:hover {
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .flap, .body {
       position: absolute;
       width: 100%;
       height: 100%;
       backface-visibility: hidden;
       border-radius: 12px;
     }
-    /* Flap styles */
-    .envelope .flap {
-      background: linear-gradient(135deg, var(--envelope-gradient-start), var(--envelope-gradient-end));
-      border: 2px solid var(--accent-color);
+    .flap {
+      background: linear-gradient(135deg, var(--color-accent), var(--color-secondary));
+      border: 2px solid var(--color-primary);
       transform-origin: top;
-      transition: transform var(--transition-duration) ease;
+      transition: transform var(--transition-speed) ease;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding-top: 1rem;
+      flex-direction: column;
+      z-index: 2;
     }
     .flap .label {
-      font-family: var(--font-handwriting);
-      font-size: 1.2rem;
-      color: var(--primary-color);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--color-primary);
     }
     .flap .open-text {
-      font-family: var(--font-sans);
+      font-family: 'Poppins', sans-serif;
       font-size: 0.85rem;
-      color: var(--secondary-color);
-      margin-top: 0.25rem;
+      color: var(--color-accent);
+      margin-top: 0.2rem;
     }
-    /* Body styles */
-    .envelope .body {
-      background: linear-gradient(135deg, #fff, #fafafa);
-      border: 2px solid var(--accent-color);
+    .body {
+      background: #fff;
+      top: 0;
+      left: 0;
       transform: rotateX(0deg);
+      border: 2px solid var(--color-accent);
+      z-index: 1;
     }
-
-    /* Letter inside envelope */
-    .envelope .letter {
+    .letter {
       position: absolute;
       bottom: 0;
       left: 5%;
@@ -161,32 +204,16 @@
       background: #fff;
       border-radius: 8px;
       padding: 1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px var(--shadow-light);
       transform: translateY(120%);
-      transition: transform var(--transition-duration) ease var(--transition-duration);
+      transition: transform var(--transition-speed) ease var(--transition-speed);
       overflow: auto;
-    }
-    .letter .message {
-      font-family: var(--font-sans);
-      font-size: 0.95rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
       line-height: 1.6;
-      color: #444;
+      color: #333;
       white-space: pre-wrap;
     }
-    /* Cursor styling for typing effect */
-    .letter .cursor {
-      display: inline-block;
-      background: #444;
-      width: 2px;
-      animation: blink 0.6s steps(1) infinite;
-      margin-left: 2px;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    /* Open state animations */
     .envelope.open .flap {
       transform: rotateX(-180deg);
     }
@@ -195,120 +222,110 @@
     }
 
     /*------------------------------------*
-      BACKGROUND & CAT ANIMATIONS
+      JOURNAL SECTION
     *------------------------------------*/
-    body {
-      background: #fff5f8;
-      overflow: hidden;
-      animation: bgPulse 10s ease-in-out infinite;
+    #journalSection {
+      display: none;
+      position: relative;
+      padding: 3rem 2rem;
+      color: #333;
+      z-index: 100;
     }
-    @keyframes bgPulse {
-      0%, 100% { background: #fff5f8; }
-      50% { background: #fdeef4; }
+    #journalSection h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
     }
+    #journalSection textarea {
+      width: 100%;
+      height: 200px;
+      border: 2px solid var(--color-accent);
+      border-radius: 10px;
+      padding: 1rem;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      resize: vertical;
+    }
+    #journalSection button {
+      margin-top: 0.5rem;
+      font-family: 'Playfair Display', serif;
+      padding: 0.6rem 1.2rem;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    #entriesList {
+      margin-top: 2rem;
+      max-height: 300px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .entry {
+      background: #fff;
+      border-left: 4px solid var(--color-primary);
+      padding: 0.8rem;
+      border-radius: 6px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    /*------------------------------------*
+      AUDIO & CAT
+    *------------------------------------*/
+    #audioControl {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+    }
+    #audioControl img { width: 24px; height: 24px; }
     #cat {
       position: absolute;
       bottom: 5%;
       left: 5%;
-      width: 120px;
-      transition: transform 4s ease-in-out;
-    }
-    /*------------------------------------*
-      FLYING KISS & PARTICLE EFFECTS
-    *------------------------------------*/
-    .kiss {
-      position: absolute;
-      font-size: 2rem;
-      opacity: 0;
-      animation: flykiss 1.5s ease-out forwards;
-      pointer-events: none;
-    }
-    @keyframes flykiss {
-      0%   { transform: translateY(0) scale(1); opacity: 1; }
-      50%  { transform: translateY(-80px) scale(1.3); opacity: 0.8; }
-      100% { transform: translateY(-140px) scale(1.6); opacity: 0; }
-    }
-    /* Heart particle container */
-    #particles {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .particle {
-      position: absolute;
-      font-size: 0.8rem;
-      color: var(--primary-color);
-      opacity: 0;
-      animation: floatUp 4s ease-out forwards;
-    }
-    @keyframes floatUp {
-      0%   { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
+      width: 140px;
+      transition: transform 5s ease-in-out;
+      z-index: 50;
     }
 
     /*------------------------------------*
-      AUDIO CONTROLS & PRELOADER
+      SCROLLBAR STYLING
     *------------------------------------*/
-    #audioControl {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: rgba(255,255,255,0.8);
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      cursor: pointer;
-      z-index: 100;
-    }
-    #audioControl img {
-      width: 24px;
-      height: 24px;
-    }
-
-    #preloader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      z-index: 200;
-      transition: opacity 0.5s;
-    }
-    #preloader.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-    .spinner {
-      border: 6px solid #f3f3f3;
-      border-top: 6px solid var(--primary-color);
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    ::-webkit-scrollbar { width: 12px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 6px; }
   </style>
 </head>
 <body>
-  <!-- Preloader Screen -->
-  <div id="preloader">
-    <div class="spinner"></div>
+  <!-- Parallax Layers -->
+  <div id="layer1" class="parallax-layer"></div>
+  <div id="layer2" class="parallax-layer"></div>
+  <div id="layer3" class="parallax-layer"></div>
+  <div id="layer4" class="parallax-layer"></div>
+  <div id="layer5" class="parallax-layer"></div>
+
+  <!-- Navigation -->
+  <div id="navbar">
+    <div class="nav-btn active" data-target="intro">Home</div>
+    <div class="nav-btn" data-target="lettersSection">Letters</div>
+    <div class="nav-btn" data-target="journalSection">Journal</div>
   </div>
+
+  <!-- Sparkle Canvas -->
+  <canvas id="sparkleCanvas"></canvas>
 
   <!-- Intro Screen -->
   <div id="intro">
@@ -316,37 +333,53 @@
     <button id="beginBtn">Begin</button>
   </div>
 
-  <!-- Envelope Grid -->
-  <div id="envelopes"></div>
+  <!-- Letters Section -->
+  <section id="lettersSection">
+    <div class="envelope-container"></div>
+  </section>
 
-  <!-- Particle Container -->
-  <div id="particles"></div>
+  <!-- Journal Section -->
+  <section id="journalSection">
+    <h2>Your Safe Place</h2>
+    <textarea id="journalInput" placeholder="Write your thoughts..."></textarea>
+    <button id="saveEntryBtn">Save Entry</button>
+    <div id="entriesList"></div>
+  </section>
 
   <!-- Audio Control -->
-  <div id="audioControl">
-    <img src="audio_on.png" alt="Toggle Music" id="audioIcon">
-  </div>
-
-  <!-- Background Music -->
+  <div id="audioControl"><img id="audioIcon" src="audio_on.png" alt="Audio Toggle"></div>
   <audio id="bgMusic" src="music.mp3" loop></audio>
 
   <!-- Persian Cat -->
   <img id="cat" src="persian_cat.png" alt="Persian Cat">
 
   <script>
-    /*------------------------------------*
-      PRELOADER LOGIC
-    *------------------------------------*/
-    window.addEventListener('load', () => {
-      const preloader = document.getElementById('preloader');
-      setTimeout(() => {
-        preloader.classList.add('hidden');
-      }, 800);
+    // Utility selectors
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+
+    // Sparkle Canvas Setup
+    const canvas = $('#sparkleCanvas');
+    const ctx = canvas.getContext('2d');
+    let sparkles = [];
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    class Sparkle { constructor() { this.reset(); } reset() { this.x= Math.random()*canvas.width; this.y= Math.random()*canvas.height; this.alpha=1; this.size=1+Math.random()*2; } update() { this.y -=0.5; this.alpha -=0.01; if(this.alpha<=0) this.reset(); } draw() { ctx.globalAlpha=this.alpha; ctx.fillStyle='#fff'; ctx.fillRect(this.x,this.y,this.size,this.size); }}
+    for(let i=0;i<200;i++) sparkles.push(new Sparkle());
+    function animateSparkles() { ctx.clearRect(0,0,canvas.width,canvas.height); sparkles.forEach(s=>{ s.update(); s.draw(); }); requestAnimationFrame(animateSparkles); }
+    animateSparkles();
+
+    // Parallax on Letters Scroll
+    const scrollContainer = $('#lettersSection');
+    scrollContainer.addEventListener('scroll',()=>{
+      const y=scrollContainer.scrollTop;
+      [1,2,3,4,5].forEach(i=>{
+        document.getElementById('layer'+i).style.transform=`translateY(${y*0.2*i}px)`;
+      });
     });
 
-    /*------------------------------------*
-      ENVELOPE DATA STRUCTURE
-    *------------------------------------*/
+    // Envelope Data
     const envelopesData = [
       { icon: "❤️", label: "Love Reminder", message: `My dearest Jaana,
 
@@ -536,139 +569,38 @@ Always,
 Abhinav` }
     ];
 
-    /*------------------------------------*
-      RENDER ENVELOPES INTO DOM
-    *------------------------------------*/
-    function createEnvelopes() {
-      const container = document.getElementById('envelopes');
-      envelopesData.forEach(env => {
-        const envelope = document.createElement('div');
-        envelope.className = 'envelope';
-        
-        const flap = document.createElement('div');
-        flap.className = 'flap';
-        flap.innerHTML = `<div class="label">${env.icon} ${env.label}</div><div class="open-text">Open When</div>`;
-        
-        const body = document.createElement('div');
-        body.className = 'body';
+    // 3D Tilt Handlers
+    function applyTilt(el,e){ const r=el.getBoundingClientRect(),x=e.clientX-(r.left+r.width/2),y=e.clientY-(r.top+r.height/2),rx=(y/r.height)*15,ry=-(x/r.width)*15; el.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`; }
+    function resetTilt(el){ el.style.transform='rotateX(0) rotateY(0)'; }
 
-        const letter = document.createElement('div');
-        letter.className = 'letter';
+    // Confetti
+    function triggerConfetti(el){ const r=el.getBoundingClientRect(); confetti({ particleCount:80, spread:70, origin:{ x:(r.left+r.width/2)/window.innerWidth, y:(r.top+r.height/2)/window.innerHeight } }); }
 
-        const msg = document.createElement('div');
-        msg.className = 'message';
-        letter.appendChild(msg);
+    // Particles
+    function spawnParticles(el){ const container=document.createElement('div'); container.style.position='absolute'; container.style.top='0'; container.style.left='0'; el.append(container); for(let i=0;i<10;i++){ const p=document.createElement('span'); p.textContent='❤️'; p.style.position='absolute'; p.style.left=`${50+Math.random()*50}%`; p.style.top=`${50+Math.random()*50}%`; p.style.opacity=1; p.style.transition='transform 2s ease, opacity 2s'; container.append(p); setTimeout(()=>{ p.style.transform=`translateY(-100px) scale(1.5)`; p.style.opacity=0; },50); setTimeout(()=>p.remove(),2050); } }
 
-        body.appendChild(letter);
-        envelope.append(flap, body);
-        container.append(envelope);
+    // Flying Kiss
+    function spawnKiss(el){ const kiss=document.createElement('div'); kiss.textContent='💋'; kiss.style.position='absolute'; const r=el.getBoundingClientRect(); kiss.style.left=`${r.left+r.width/2}px`; kiss.style.top=`${r.top}px`; kiss.style.fontSize='2rem'; document.body.append(kiss); setTimeout(()=>{ kiss.style.transition='transform 1.2s, opacity 1.2s'; kiss.style.transform='translateY(-140px) scale(1.6)'; kiss.style.opacity=0; },50); setTimeout(()=>kiss.remove(),1250); }
 
-        envelope.addEventListener('click', () => openEnvelope(envelope, env.message));
-      });
-    }
+    // Typing Effect
+    function typeMessage(el,text,speed){ let i=0; el.innerHTML=''; const c=document.createElement('span'); c.className='cursor'; el.append(c); (function t(){ if(i<text.length){ el.innerHTML=el.innerHTML.replace(c.outerHTML,'')+(text[i]==='\n'?'<br>':text[i]); el.append(c); i++; setTimeout(t,speed);} else c.remove(); })(); }
 
-    /*------------------------------------*
-      OPEN ENVELOPE & TYPING EFFECT
-    *------------------------------------*/
-    function openEnvelope(el, text) {
-      if (el.classList.contains('open')) return;
-      el.classList.add('open');
-      typeMessage(el.querySelector('.message'), text, 40, () => {
-        spawnParticles(el);
-      });
-      spawnKiss(el);
-    }
+    // Initialize Letters
+    function initLetters(){ const container=$('.envelope-container'); container.innerHTML=''; envelopesData.forEach(env=>{ const el=document.createElement('div'); el.className='envelope'; el.innerHTML=`<div class="flap"><div class="label">${env.icon} ${env.label}</div><div class="open-text">Open When</div></div><div class="body"><div class="letter"><div class="message"></div></div></div>`; container.append(el); el.addEventListener('mousemove',e=>applyTilt(el,e)); el.addEventListener('mouseleave',()=>resetTilt(el)); el.addEventListener('click',()=>{ if(el.classList.contains('open'))return; el.classList.add('open'); typeMessage(el.querySelector('.message'),env.message,40); triggerConfetti(el); spawnParticles(el); spawnKiss(el); }); }); }
 
-    function typeMessage(container, text, speed, callback) {
-      let idx = 0;
-      container.innerHTML = '';
-      const cursor = document.createElement('span');
-      cursor.className = 'cursor';
-      cursor.innerHTML = '&nbsp;';
-      container.append(cursor);
-      
-      function type() {
-        if (idx < text.length) {
-          const char = text[idx++];
-          if (char === '\n') container.innerHTML = container.innerHTML.replace(cursor.outerHTML, '') + '<br>';
-          else container.innerHTML = container.innerHTML.replace(cursor.outerHTML, '') + char;
-          container.append(cursor);
-          setTimeout(type, speed);
-        } else {
-          cursor.remove();
-          if (callback) callback();
-        }
-      }
-      type();
-    }
+    // Journal
+    function loadEntries(){ const list=$('#entriesList'); list.innerHTML=''; const entries=JSON.parse(localStorage.getItem('journalEntries')||'[]'); entries.reverse().forEach(e=>{ const d=document.createElement('div'); d.className='entry'; d.textContent=e; list.append(d);} ); }
+    $('#saveEntryBtn').addEventListener('click',()=>{ const t=$('#journalInput'); const v=t.value.trim(); if(!v)return; const arr=JSON.parse(localStorage.getItem('journalEntries')||'[]'); arr.push(v); localStorage.setItem('journalEntries',JSON.stringify(arr)); t.value=''; loadEntries(); });
 
-    /*------------------------------------*
-      FLYING KISS EFFECT
-    *------------------------------------*/
-    function spawnKiss(el) {
-      const kiss = document.createElement('span');
-      kiss.className = 'kiss';
-      kiss.textContent = '💋';
-      const { left, top, width } = el.getBoundingClientRect();
-      kiss.style.left = `${left + width/2}px`;
-      kiss.style.top = `${top}px`;
-      document.body.append(kiss);
-      setTimeout(() => kiss.remove(), 1500);
-    }
+    // Audio Control
+    function initAudio(){ const music=$('#bgMusic'), icon=$('#audioIcon'); $('#audioControl').addEventListener('click',()=>{ if(music.paused){ music.play(); icon.src='audio_on.png'; }else{ music.pause(); icon.src='audio_off.png'; }}); music.play().catch(()=>{}); }
 
-    /*------------------------------------*
-      PARTICLE BURST EFFECT
-    *------------------------------------*/
-    function spawnParticles(el) {
-      const container = document.getElementById('particles');
-      for (let i = 0; i < 8; i++) {
-        const p = document.createElement('span');
-        p.className = 'particle';
-        p.textContent = '❤️';
-        const { left, top, width, height } = el.getBoundingClientRect();
-        p.style.left = `${left + width/2}px`;
-        p.style.top = `${top + height/2}px`;
-        p.style.animationDelay = `${Math.random() * 0.3}s`;
-        container.append(p);
-        setTimeout(() => p.remove(), 4000);
-      }
-    }
+    // Cat Roam
+    function roamCat(){ const cat=$('#cat'); const x=Math.random()*(window.innerWidth-cat.clientWidth), y=Math.random()*(window.innerHeight-cat.clientHeight-50); cat.style.transform=`translate(${x}px,${y}px)`;} setInterval(roamCat,6000);
 
-    /*------------------------------------*
-      CAT ROAMING ANIMATION
-    *------------------------------------*/
-    function roamCat() {
-      const cat = document.getElementById('cat');
-      const x = Math.random() * (window.innerWidth - cat.clientWidth);
-      const y = Math.random() * (window.innerHeight - cat.clientHeight - 50);
-      cat.style.transform = `translate(${x}px, ${y}px)`;
-    }
-    setInterval(roamCat, 6000);
-
-    /*------------------------------------*
-      AUDIO CONTROL TOGGLE
-    *------------------------------------*/
-    function setupAudioControl() {
-      const music = document.getElementById('bgMusic');
-      const control = document.getElementById('audioControl');
-      const icon = document.getElementById('audioIcon');
-      control.addEventListener('click', () => {
-        if (music.paused) { music.play(); icon.src = 'audio_on.png'; }
-        else { music.pause(); icon.src = 'audio_off.png'; }
-      });
-    }
-
-    /*------------------------------------*
-      INITIALIZATION
-    *------------------------------------*/
-    document.getElementById('beginBtn').addEventListener('click', () => {
-      document.getElementById('intro').style.display = 'none';
-      document.getElementById('envelopes').style.display = 'flex';
-      document.getElementById('bgMusic').play().catch(()=>{});
-      roamCat();
-      createEnvelopes();
-      setupAudioControl();
-    });
+    // Begin Experience
+    $('#beginBtn').addEventListener('click',()=>{ $('#intro').style.display='none'; initLetters(); setTimeout(()=>$('.nav-btn[data-target="lettersSection"]').click(),100); initAudio(); roamCat(); loadEntries(); });
   </script>
 </body>
 </html>
+
