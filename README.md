@@ -159,15 +159,14 @@
       font-weight: bold;
       pointer-events: none;
       text-align: center;
-      transition: background .2s;
+      transition: opacity .5s, background .2s;
       user-select: none;
       border: 1.5px solid #ede3f7;
+      opacity: 1;
     }
     .envelope.opened .envelope-label {
-      background: rgba(255,255,255,0.75);
-      color: #a57db9;
-      font-weight: bold;
-      z-index: 120;
+      opacity: 0;
+      transition: opacity .5s;
     }
     @media (max-width: 700px) {
       .entrance-title { font-size: 1.7rem; }
