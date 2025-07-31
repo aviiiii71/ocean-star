@@ -2,605 +2,288 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>From the star above the ocean</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <!-- Canvas-Confetti CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <title>From the Star Above the Ocean 💌</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Parisienne&display=swap" rel="stylesheet">
   <style>
-    /*------------------------------------*
-      ROOT & VARIABLES
-    *------------------------------------*/
     :root {
-      --color-primary: #d6336c;
-      --color-secondary: #fdeef4;
-      --color-accent: #e6a1b8;
-      --transition-speed: 0.7s;
-      --shadow-light: rgba(0,0,0,0.15);
+      --main-bg: #f6ede9;
+      --envelope-pastel1: #ffe0ec;
+      --envelope-pastel2: #d6f0ff;
+      --envelope-pastel3: #fff7d1;
+      --envelope-pastel4: #e5ffe2;
+      --envelope-pastel5: #f1e0ff;
+      --handwriting: 'Nanum Pen Script', 'Parisienne', cursive;
+      --title-font: 'Parisienne', cursive;
+      --shadow: 0 4px 24px rgba(0,0,0,0.07);
     }
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(180deg, var(--color-secondary), #fff5f8);
-    }
-
-    /*------------------------------------*
-      NAVIGATION & LAYOUT
-    *------------------------------------*/
-    #navbar {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 1rem;
-      z-index: 1000;
-    }
-    .nav-btn {
-      padding: 0.5rem 1rem;
-      background: rgba(255,255,255,0.6);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      border: 2px solid var(--color-accent);
-      cursor: pointer;
-      font-family: 'Playfair Display', serif;
-      font-weight: 600;
-      color: var(--color-primary);
-      transition: background var(--transition-speed);
-    }
-    .nav-btn.active, .nav-btn:hover {
-      background: rgba(255,255,255,0.9);
-    }
-
-    /*------------------------------------*
-      PARALLAX BACKGROUND LAYERS (5 LAYERS)
-    *------------------------------------*/
-    .parallax-layer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-attachment: fixed;
-      will-change: transform;
-    }
-    #layer1 { background-image: url('layer1.png'); z-index: 1; opacity: 0.6; }
-    #layer2 { background-image: url('layer2.png'); z-index: 2; opacity: 0.5; }
-    #layer3 { background-image: url('layer3.png'); z-index: 3; opacity: 0.4; }
-    #layer4 { background-image: url('layer4.png'); z-index: 4; opacity: 0.3; }
-    #layer5 { background-image: url('layer5.png'); z-index: 5; opacity: 0.2; }
-
-    /*------------------------------------*
-      CANVAS SPARKLES
-    *------------------------------------*/
-    #sparkleCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 10;
-    }
-
-    /*------------------------------------*
-      INTRO SCREEN
-    *------------------------------------*/
-    #intro {
+    body {
+      margin: 0; padding: 0;
+      background: linear-gradient(120deg, #f6ede9 60%, #e5edfb 100%);
+      min-height: 100vh;
+      font-family: var(--handwriting);
+      overflow-x: hidden;
       position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      backdrop-filter: blur(5px);
-      z-index: 100;
     }
-    #intro h1 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 4rem;
-      color: var(--color-primary);
-      text-shadow: 3px 3px 6px var(--shadow-light);
+    /* Parallax Stars */
+    .parallax-bg { pointer-events: none; position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; z-index: 1; overflow: hidden;}
+    .star { position: absolute; width: 2px; height: 2px; border-radius: 100%; background: #fff8; animation: twinkle 4s infinite linear; opacity: 0.7;}
+    @keyframes twinkle { 0% { opacity: .7 } 50% { opacity: 1 } 100% { opacity: .7 }}
+    /* Entrance Screen */
+    #entrance {
+      position: fixed; z-index: 99; background: var(--main-bg); width: 100vw; height: 100vh; top: 0; left: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px;
+      transition: opacity .9s cubic-bezier(.6,0,.3,1);
     }
-    #intro button {
-      margin-top: 1rem;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 30px;
-      background: var(--color-primary);
-      color: #fff;
-      cursor: pointer;
-      box-shadow: 0 4px 12px var(--shadow-light);
-      transition: transform 0.2s;
-    }
-    #intro button:hover {
-      transform: scale(1.05);
-    }
-
-    /*------------------------------------*
-      LETTERS SECTION
-    *------------------------------------*/
-    #lettersSection {
-      display: none;
-      position: relative;
-      padding: 4rem 2rem;
-      overflow-y: auto;
-      z-index: 100;
-    }
-    .envelope-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-    .envelope {
-      perspective: 1200px;
-      cursor: pointer;
-      position: relative;
-      height: 0;
-      padding-bottom: 60%;
-      transform-style: preserve-3d;
-      will-change: transform;
-      transition: transform 0.2s ease;
-    }
-    .envelope:hover {
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-    .flap, .body {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 12px;
-    }
-    .flap {
-      background: linear-gradient(135deg, var(--color-accent), var(--color-secondary));
-      border: 2px solid var(--color-primary);
-      transform-origin: top;
-      transition: transform var(--transition-speed) ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      z-index: 2;
-    }
-    .flap .label {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      color: var(--color-primary);
-    }
-    .flap .open-text {
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.85rem;
-      color: var(--color-accent);
-      margin-top: 0.2rem;
-    }
-    .body {
-      background: #fff;
-      top: 0;
-      left: 0;
-      transform: rotateX(0deg);
-      border: 2px solid var(--color-accent);
-      z-index: 1;
-    }
-    .letter {
-      position: absolute;
-      bottom: 0;
-      left: 5%;
-      width: 90%;
-      height: 90%;
-      background: #fff;
-      border-radius: 8px;
-      padding: 1rem;
-      box-shadow: 0 4px 12px var(--shadow-light);
-      transform: translateY(120%);
-      transition: transform var(--transition-speed) ease var(--transition-speed);
-      overflow: auto;
-      font-family: 'Playfair Display', serif;
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #333;
-      white-space: pre-wrap;
-    }
-    .envelope.open .flap {
-      transform: rotateX(-180deg);
-    }
-    .envelope.open .letter {
-      transform: translateY(0);
-    }
-
-    /*------------------------------------*
-      JOURNAL SECTION
-    *------------------------------------*/
-    #journalSection {
-      display: none;
-      position: relative;
-      padding: 3rem 2rem;
-      color: #333;
-      z-index: 100;
-    }
-    #journalSection h2 {
-      font-family: 'Playfair Display', serif;
+    #entrance.hide { opacity: 0; pointer-events: none;}
+    .entrance-title {
+      font-family: var(--title-font);
       font-size: 2.5rem;
+      letter-spacing: .04em;
+      color: #b990ca;
+      text-shadow: 0 4px 24px #b990ca33;
       margin-bottom: 1rem;
-      text-align: center;
+      animation: fadeInDown 2s;
     }
-    #journalSection textarea {
-      width: 100%;
-      height: 200px;
-      border: 2px solid var(--color-accent);
-      border-radius: 10px;
-      padding: 1rem;
-      font-family: 'Poppins', sans-serif;
-      font-size: 1rem;
-      resize: vertical;
+    @keyframes fadeInDown { from { transform: translateY(-50px); opacity: 0 } to   { transform: translateY(0); opacity: 1 }}
+    .princess-crown {
+      width: 70px;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 3px 15px #dcb8fd44);
+      animation: crownPop 1.8s;
     }
-    #journalSection button {
-      margin-top: 0.5rem;
-      font-family: 'Playfair Display', serif;
-      padding: 0.6rem 1.2rem;
-      background: var(--color-primary);
-      color: #fff;
+    @keyframes crownPop { 0% { transform: scale(0.7) rotate(-30deg); opacity: 0 } 70% { transform: scale(1.1) rotate(5deg); opacity: 1 } 100% { transform: scale(1) rotate(0deg); }}
+    #begin-btn {
+      font-family: var(--handwriting);
+      background: linear-gradient(90deg, #fbb1d1 40%, #c6e6ff 100%);
+      color: #573c6b;
+      font-size: 1.7rem;
       border: none;
-      border-radius: 20px;
+      border-radius: 1.2em;
+      padding: 1em 2.5em;
       cursor: pointer;
+      box-shadow: 0 2px 16px #c08de833, 0 1.5px 0 #fff;
+      transition: all .21s;
+      margin-top: 1.5rem;
+      animation: fadeIn 2s 1s both;
     }
-    #entriesList {
-      margin-top: 2rem;
-      max-height: 300px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    #begin-btn:hover { transform: scale(1.04) translateY(-2px); box-shadow: 0 7px 22px #c08de866, 0 2px 0 #fff;}
+    @keyframes fadeIn { from { opacity: 0; } to   { opacity: 1; }}
+    /* Envelope Gallery */
+    #gallery {
+      padding-top: 60px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 38px;
+      max-width: 1350px;
+      margin: 0 auto;
+      z-index: 10;
+      position: relative;
     }
-    .entry {
-      background: #fff;
-      border-left: 4px solid var(--color-primary);
-      padding: 0.8rem;
-      border-radius: 6px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.95rem;
-      line-height: 1.4;
+    .envelope-outer { perspective: 900px; background: none; display: flex; align-items: center; justify-content: center; min-height: 230px; min-width: 180px; position: relative;}
+    .envelope {
+      width: 180px; height: 120px; position: relative; background: none; cursor: pointer;
+      transform-style: preserve-3d; transition: transform .3s cubic-bezier(.8,0,.2,1);
+      box-shadow: var(--shadow); border-radius: 18px; outline: none;
     }
-
-    /*------------------------------------*
-      AUDIO & CAT
-    *------------------------------------*/
-    #audioControl {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-      background: rgba(255,255,255,0.8);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;justify-content: center;
-      cursor: pointer;
-      z-index: 100;
+    .envelope:hover { transform: rotateY(7deg) scale(1.03); z-index: 5; box-shadow: 0 8px 28px #ab90e855, 0 2px 0 #fff;}
+    .envelope.opened { pointer-events: none;}
+    .envelope-flap {
+      position: absolute; width: 100%; height: 60%; background: #fff9fc;
+      border-radius: 18px 18px 44px 44px/30px 30px 55px 55px;
+      left: 0; top: 0; z-index: 2; transform-origin: top center;
+      box-shadow: 0 8px 36px #d1a9c655, 0 2px 0 #fff9;
+      transition: transform .72s cubic-bezier(.6,0,.32,1);
     }
-    #audioControl img { width: 24px; height: 24px; }
-    #cat {
-      position: absolute;
-      bottom: 5%;
-      left: 5%;
-      width: 140px;
-      transition: transform 5s ease-in-out;
-      z-index: 50;
+    .envelope.opened .envelope-flap { transform: rotateX(-120deg); transition: transform .8s cubic-bezier(.6,0,.32,1); box-shadow: none;}
+    .envelope-body { width: 100%; height: 100%; background: var(--envelope-pastel1); border-radius: 0 0 18px 18px/0 0 24px 24px; position: absolute; left: 0; top: 22px; z-index: 1; box-shadow: 0 8px 36px #b5b5d811; overflow: hidden; border: 1.5px solid #fff7; background: repeating-linear-gradient(125deg, #fff9fc 0 12px, #ffe0ec 12px 24px, #fff9fc 24px 40px); transition: background .7s;}
+    .envelope-label { position: absolute; width: 100%; text-align: center; top: 64%; left: 0; font-family: var(--handwriting); font-size: 1.19rem; color: #a47b9b; letter-spacing: .01em; pointer-events: none; text-shadow: 0 2px 14px #fff5;}
+    /* Different pastel for each envelope */
+    .envelope-body[data-i="1"] { background: var(--envelope-pastel1);}
+    .envelope-body[data-i="2"] { background: var(--envelope-pastel2);}
+    .envelope-body[data-i="3"] { background: var(--envelope-pastel3);}
+    .envelope-body[data-i="4"] { background: var(--envelope-pastel4);}
+    .envelope-body[data-i="5"] { background: var(--envelope-pastel5);}
+    .envelope-body[data-i="6"], .envelope-body[data-i="11"], .envelope-body[data-i="16"], .envelope-body[data-i="21"], .envelope-body[data-i="26"], .envelope-body[data-i="31"] { background: var(--envelope-pastel2);}
+    .envelope-body[data-i="7"], .envelope-body[data-i="12"], .envelope-body[data-i="17"], .envelope-body[data-i="22"], .envelope-body[data-i="27"] { background: var(--envelope-pastel3);}
+    .envelope-body[data-i="8"], .envelope-body[data-i="13"], .envelope-body[data-i="18"], .envelope-body[data-i="23"], .envelope-body[data-i="28"] { background: var(--envelope-pastel4);}
+    .envelope-body[data-i="9"], .envelope-body[data-i="14"], .envelope-body[data-i="19"], .envelope-body[data-i="24"], .envelope-body[data-i="29"] { background: var(--envelope-pastel5);}
+    .envelope-body[data-i="10"], .envelope-body[data-i="15"], .envelope-body[data-i="20"], .envelope-body[data-i="25"], .envelope-body[data-i="30"] { background: var(--envelope-pastel1);}
+    .envelope-paper {
+      width: 100%; height: 160px; background: #f9f7ee; position: absolute; left: 0; top: 50px; z-index: 10; border-radius: 12px;
+      box-shadow: 0 4px 32px #d0b0b036, 0 1px 0 #fff; border: 1.5px solid #f5e5ff; opacity: 0; pointer-events: none;
+      transform: scale(.9) translateY(30px); transition: all .7s cubic-bezier(.5,0,.3,1); padding: 16px 14px 10px 18px;
+      font-family: var(--handwriting); font-size: 1.1rem; color: #654c5f;
+      background-image: repeating-linear-gradient(120deg, #f9f7ee 0 20px, #fffbe9 20px 32px, #f9f7ee 32px 45px);
+      overflow-y: auto; line-height: 1.8; text-shadow: 0 2px 16px #f9f6e988; white-space: pre-line; animation: none;
     }
-
-    /*------------------------------------*
-      SCROLLBAR STYLING
-    *------------------------------------*/
-    ::-webkit-scrollbar { width: 12px; }
-    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
-    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 6px; }
+    .envelope.opened .envelope-paper {
+      opacity: 1; pointer-events: auto; transform: scale(1) translateY(-24px);
+      transition: all .77s cubic-bezier(.7,0,.2,1); animation: letterUnroll 1.4s both;
+    }
+    @keyframes letterUnroll { 0% { transform: scale(.85) translateY(100px); opacity: 0; } 50% { opacity: .9; } 100% { transform: scale(1) translateY(-24px); opacity: 1; }}
+    .wax-seal { position: absolute; left: 47%; top: 14px; transform: translateX(-50%); width: 34px; height: 34px; z-index: 12; filter: drop-shadow(0 2px 12px #bb5dbb22); animation: waxDrip 1.7s;}
+    @keyframes waxDrip { 0% { opacity: 0; transform: translateY(-18px) scale(.6);} 70% { opacity: .85; transform: translateY(8px) scale(1.1);} 100% { opacity: 1; transform: translateY(0) scale(1);}}
+    /* Mood Animations (confetti, kiss, rain) */
+    .mood-anim { pointer-events: none; position: absolute; left: 50%; top: 0; width: 120px; height: 120px; transform: translate(-50%, -50%); z-index: 90; opacity: 0; animation: popMood 1.5s cubic-bezier(.4,0,.2,1);}
+    .envelope.opened .mood-anim { opacity: 1; animation: popMood 1.5s cubic-bezier(.4,0,.2,1);}
+    @keyframes popMood { 0% { opacity: 0; transform: scale(.7);} 50% { opacity: 1; transform: scale(1.25);} 90% { opacity: 1;} 100% { opacity: 0; transform: scale(0.2);}}
+    /* Persian Cat */
+    .persian-cat { position: fixed; left: 20vw; bottom: 0; width: 90px; height: auto; z-index: 50; filter: drop-shadow(0 3px 20px #a2b6e877); transition: left 2.3s cubic-bezier(.6,0,.2,1), bottom 1.7s; animation: catBlink 6s infinite; will-change: left, bottom; pointer-events: none;}
+    @keyframes catBlink { 0%   { filter: brightness(1); } 92%  { filter: brightness(1);} 96%  { filter: brightness(.8);} 98%  { filter: brightness(1);} 100% { filter: brightness(1);}}
+    @media (max-width: 700px) {
+      .entrance-title { font-size: 1.7rem; }
+      .envelope-outer { min-width: 128px; min-height: 125px;}
+      .envelope { width: 98px; height: 67px;}
+      .envelope-label { font-size: 0.99rem;}
+      .envelope-paper { font-size: 0.97rem; height: 102px; padding: 7px 6px;}
+      #gallery { gap: 16px; padding-top: 20px;}
+    }
   </style>
 </head>
 <body>
-  <!-- Parallax Layers -->
-  <div id="layer1" class="parallax-layer"></div>
-  <div id="layer2" class="parallax-layer"></div>
-  <div id="layer3" class="parallax-layer"></div>
-  <div id="layer4" class="parallax-layer"></div>
-  <div id="layer5" class="parallax-layer"></div>
-
-  <!-- Navigation -->
-  <div id="navbar">
-    <div class="nav-btn active" data-target="intro">Home</div>
-    <div class="nav-btn" data-target="lettersSection">Letters</div>
-    <div class="nav-btn" data-target="journalSection">Journal</div>
-  </div>
-
-  <!-- Sparkle Canvas -->
-  <canvas id="sparkleCanvas"></canvas>
-
-  <!-- Intro Screen -->
-  <div id="intro">
-    <h1>From the star above the ocean ❤️</h1>
-    <button id="beginBtn">Begin</button>
-  </div>
-
-  <!-- Letters Section -->
-  <section id="lettersSection">
-    <div class="envelope-container"></div>
-  </section>
-
-  <!-- Journal Section -->
-  <section id="journalSection">
-    <h2>Your Safe Place</h2>
-    <textarea id="journalInput" placeholder="Write your thoughts..."></textarea>
-    <button id="saveEntryBtn">Save Entry</button>
-    <div id="entriesList"></div>
-  </section>
-
-  <!-- Audio Control -->
-  <div id="audioControl"><img id="audioIcon" src="audio_on.png" alt="Audio Toggle"></div>
-  <audio id="bgMusic" src="music.mp3" loop></audio>
-
+  <!-- Parallax BG Stars -->
+  <div class="parallax-bg" id="parallax-bg"></div>
   <!-- Persian Cat -->
-  <img id="cat" src="persian_cat.png" alt="Persian Cat">
-
+  <img src="https://i.imgur.com/Yv3sZ5g.png" alt="Persian Cat" class="persian-cat" id="cat" />
+  <!-- Entrance Screen -->
+  <div id="entrance">
+    <img class="princess-crown" src="https://i.imgur.com/klC5gP8.png" alt="Princess Crown" />
+    <div class="entrance-title">
+      From the <b>Star</b> Above the Ocean<br>
+      <span style="font-size:1.4rem;">💖 To my Jaana 💖</span>
+    </div>
+    <button id="begin-btn">Begin &nbsp;✨</button>
+    <div style="font-size:1rem; color:#b188be;">
+      <span>31 magical envelopes await you...<br>Each one, a piece of my heart.</span>
+    </div>
+  </div>
+  <!-- Envelope Gallery -->
+  <main style="z-index:2; position:relative;">
+    <div id="gallery"></div>
+  </main>
   <script>
-    // Utility selectors
-    const $ = s => document.querySelector(s);
-    const $$ = s => Array.from(document.querySelectorAll(s));
+    // 31 Open When Envelopes
+    const envelopes = [
+      { label: "Open When: You Miss Me", mood: "kiss", text: "My Jaana, every second apart feels like an ocean. When you miss me, remember: I’m thinking of you under the same sky, loving you even more than yesterday. Imagine my arms around you, holding you close—until the moment we meet again." },
+      { label: "Open When: You’re Sad", mood: "rain", text: "Sometimes the world feels heavy, and that's okay. Close your eyes, take a deep breath, and remember: your Star is always shining for you. Even on cloudy days, you are my sun. I love every shade of you—your smiles, your tears, your every emotion." },
+      { label: "Open When: You Want to Smile", mood: "confetti", text: "Do you know how much your smile lights up my life? Imagine me sending you the world’s biggest, silliest grin. You’re my sunshine—never forget how loved you are, always." },
+      { label: "Open When: You Feel Stressed", mood: "rain", text: "Let go of everything for a moment. Inhale deeply and picture me beside you, holding your hand and telling you, ‘We’ll get through anything together.’ I love you beyond words, my hope and my calm." },
+      { label: "Open When: You Want a Warm Hug", mood: "kiss", text: "Wrap your arms around yourself. Now imagine it’s me—my embrace, my warmth, my heart beating close to yours. This is my hug, crossing all distance, for you." },
+      { label: "Open When: You’re Angry (Even at Me)", mood: "rain", text: "It’s okay to be angry. I’ll always love every part of you, even your stormiest moods. When you’re ready, I’ll listen and hold you—always with patience and so much love." },
+      { label: "Open When: You Can’t Sleep", mood: "kiss", text: "Imagine me whispering: ‘It’s okay, my Jaana, just close your eyes and feel my love surround you.’ I’m there with you, even in the silent hours. Goodnight, my love." },
+      { label: "Open When: You’re Celebrating", mood: "confetti", text: "Yay! Whatever the reason, I’m cheering for you! You deserve every happiness, every little win, every single joy. I’m so proud of you—always." },
+      { label: "Open When: You’re Anxious", mood: "rain", text: "Breathe in. Breathe out. You are safe, you are loved, and you are never alone. Let my words wrap around you like a blanket. Everything will be okay, my hope." },
+      { label: "Open When: It’s Your Birthday", mood: "confetti", text: "Happy Birthday, my love! Another year of you—a gift to this world. I wish I could shower you in kisses and cake. Know that I’m celebrating your existence every single day." },
+      { label: "Open When: You Doubt Yourself", mood: "kiss", text: "You are more than enough. Strong, beautiful, radiant, and kind. When doubts come, remember: your Star believes in you, endlessly." },
+      { label: "Open When: You Need Motivation", mood: "confetti", text: "Whatever you dream of, you can do. You have a universe inside you. I’m always here, your number one supporter, cheering you on through every challenge." },
+      { label: "Open When: You Want to Feel Loved", mood: "kiss", text: "You are cherished beyond measure, adored beyond reason, and loved beyond time. Let these words be my arms around your heart. I love you, endlessly." },
+      { label: "Open When: You Want to Laugh", mood: "confetti", text: "Knock knock. Who’s there? Star! Star who? Star, who loves you to the moon and back, forever and ever! (Okay, that was cheesy but you smiled, didn’t you?)" },
+      { label: "Open When: You Feel Lonely", mood: "rain", text: "Look up at the night sky. Even if we’re apart, we’re looking at the same moon. My love, you are never truly alone—my heart is always with you." },
+      { label: "Open When: You’re Tired", mood: "kiss", text: "Rest, my love. You deserve peace, softness, and comfort. If I could, I’d tuck you in and kiss your forehead until you drift into sweet dreams." },
+      { label: "Open When: You Want to Remember Us", mood: "confetti", text: "From our first hello to our every memory, every moment with you is my treasure. I’ll spend my life making new memories, side by side with you." },
+      { label: "Open When: You Need Hope", mood: "confetti", text: "Remember: storms always pass. There’s always a new dawn, and I’ll always be your light—your hope—through everything." },
+      { label: "Open When: You Want to Read My Poem", mood: "kiss", text: "If love were verses, you’d be every line—soft, radiant, brave, divine. My Jaana, my ocean, my hope, my rhyme—loving you always, till the end of time." },
+      { label: "Open When: You’re Overthinking", mood: "rain", text: "Pause. Breathe. Let go. Sometimes, the heart knows what the mind can’t explain. Trust yourself, trust us. I trust you, always." },
+      { label: "Open When: You Want To Cry", mood: "rain", text: "Let the tears flow. Every drop holds a story, every ache is valid. I love your strong heart and your soft soul. I’ll hold your hand through every storm." },
+      { label: "Open When: You Need Forgiveness", mood: "kiss", text: "We all make mistakes. I forgive you, always, for anything. Our love is bigger than any flaw, stronger than any doubt." },
+      { label: "Open When: You’re Grateful", mood: "confetti", text: "And I am endlessly grateful for you. Thank you for being my hope, my dream, my greatest miracle." },
+      { label: "Open When: You’re Angry At The World", mood: "rain", text: "It’s okay to feel that way. The world is big and tough, but you are stronger. Take your time, come back to yourself. I’m here." },
+      { label: "Open When: You’re Proud of Yourself", mood: "confetti", text: "Look at you—growing, shining, glowing. I’m so proud of you. Never forget how wonderful you are." },
+      { label: "Open When: You Need a Reason To Keep Going", mood: "confetti", text: "You are my reason. Our love is worth every struggle, every dawn, every heartbeat. We will make it, together." },
+      { label: "Open When: You Want to Dream", mood: "confetti", text: "Dream big, my Jaana. Our dreams are the stars above us, guiding us home. I believe in every dream you hold." },
+      { label: "Open When: You Want to Feel Safe", mood: "kiss", text: "Imagine my arms around you, shielding you from every worry. You’re safe here, always, in my love." },
+      { label: "Open When: You’re Missing Your Family", mood: "rain", text: "Family is forever, and so is my love for you. I’ll always be your home, no matter where we are." },
+      { label: "Open When: You Want to Feel Beautiful", mood: "confetti", text: "You are breathtaking. Inside and out. You make the world brighter just by being yourself. Never doubt your beauty." },
+      { label: "Open When: You Want to Feel Like a Princess", mood: "confetti", text: "You are my princess, my queen, my everything. I will always cherish you, adore you, and make you feel royal." },
+      { label: "Open When: It’s 31st July", mood: "kiss", text: "Our day. One year of love, hope, and magic. Thank you for finding me, for loving me. This is just the beginning of our forever. Happy anniversary, my love." },
+    ];
 
-    // Sparkle Canvas Setup
-    const canvas = $('#sparkleCanvas');
-    const ctx = canvas.getContext('2d');
-    let sparkles = [];
-    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    class Sparkle { constructor() { this.reset(); } reset() { this.x= Math.random()*canvas.width; this.y= Math.random()*canvas.height; this.alpha=1; this.size=1+Math.random()*2; } update() { this.y -=0.5; this.alpha -=0.01; if(this.alpha<=0) this.reset(); } draw() { ctx.globalAlpha=this.alpha; ctx.fillStyle='#fff'; ctx.fillRect(this.x,this.y,this.size,this.size); }}
-    for(let i=0;i<200;i++) sparkles.push(new Sparkle());
-    function animateSparkles() { ctx.clearRect(0,0,canvas.width,canvas.height); sparkles.forEach(s=>{ s.update(); s.draw(); }); requestAnimationFrame(animateSparkles); }
-    animateSparkles();
+    // Mood Animations
+    const moodIcons = {
+      kiss: "💋",
+      rain: "🌧️",
+      confetti: "🎉"
+    };
 
-    // Parallax on Letters Scroll
-    const scrollContainer = $('#lettersSection');
-    scrollContainer.addEventListener('scroll',()=>{
-      const y=scrollContainer.scrollTop;
-      [1,2,3,4,5].forEach(i=>{
-        document.getElementById('layer'+i).style.transform=`translateY(${y*0.2*i}px)`;
+    // Paste a simple wax seal image (transparent PNG, free):  
+    const waxSeal = "https://i.imgur.com/oKktxSU.png";
+
+    // Gallery rendering
+    const gallery = document.getElementById("gallery");
+    envelopes.forEach((env, i) => {
+      const el = document.createElement('div');
+      el.className = "envelope-outer";
+      el.innerHTML = `
+        <div class="envelope" tabindex="0" data-i="${i+1}">
+          <div class="envelope-flap"></div>
+          <div class="envelope-body" data-i="${i+1}"></div>
+          <div class="envelope-label">${env.label}</div>
+          <div class="envelope-paper"><span>${env.text}</span></div>
+          <img src="${waxSeal}" class="wax-seal" alt="Wax Seal"/>
+          <div class="mood-anim" style="font-size:3.2rem;">${moodIcons[env.mood]}</div>
+        </div>
+      `;
+      gallery.appendChild(el);
+    });
+
+    // Envelope open/close animations
+    document.querySelectorAll('.envelope').forEach(env => {
+      env.addEventListener('click', function(e) {
+        if (this.classList.contains("opened")) return;
+        this.classList.add("opened");
+        // Play open sound (optional): new Audio("https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa7fb8.mp3").play();
+      });
+      env.addEventListener('keydown', function(e) {
+        if(e.key==="Enter"||e.key===" "){
+          this.click();
+        }
       });
     });
 
-    // Envelope Data
-    const envelopesData = [
-      { icon: "❤️", label: "Love Reminder", message: `My dearest Jaana,
+    // Entrance screen
+    document.getElementById("begin-btn").onclick = function() {
+      document.getElementById("entrance").classList.add("hide");
+      setTimeout(()=>{document.getElementById("entrance").style.display="none"},900);
+    };
+
+    // Parallax stars
+    function randomBetween(a,b){return a+Math.random()*(b-a);}
+    let parallaxBG = document.getElementById("parallax-bg");
+    for(let i=0;i<80;i++){
+      let s=document.createElement('div');
+      s.className="star";
+      s.style.left=randomBetween(1,99)+"vw";
+      s.style.top=randomBetween(1,99)+"vh";
+      s.style.animationDuration=randomBetween(2,6)+"s";
+      parallaxBG.appendChild(s);
+    }
+
+    // Persian Cat Animation
+    const cat = document.getElementById("cat");
+    function moveCat() {
+      let left = Math.random()*80+5; // 5vw-85vw
+      let bottom = Math.random()*16; // 0-16vh
+      cat.style.left = left+"vw";
+      cat.style.bottom = bottom+"vh";
+      setTimeout(moveCat, randomBetween(4,9)*1000);
+    }
+    moveCat();
+
+    // Optional: Envelope 3D tilt effect
+    document.querySelectorAll('.envelope').forEach(env=>{
+      env.addEventListener('mousemove',function(e){
+        const rect = this.getBoundingClientRect();
+        const x = (e.clientX - rect.left)/rect.width-.5, y = (e.clientY - rect.top)/rect.height-.5;
+        this.style.transform = `rotateY(${x*16}deg) rotateX(${-y*10}deg) scale(1.05)`;
+      });
+      env.addEventListener('mouseleave',function(e){
+        this.style.transform = "";
+      });
+    });
 
-Every moment with you feels like the star above the ocean guiding me home. I love you beyond words.
-
-Forever yours,
-Abhinav` },
-      { icon: "💌", label: "Miss Me", message: `My sweet Jaana,
-
-When distance tugs at our hearts, remember that I carry you with me in every beat. I miss you more than the ocean misses the moon.
-
-All my love,
-Abhinav` },
-      { icon: "🌧️", label: "Bad Day", message: `Hey love,
-
-I know today has been tough. Here’s a gentle hug to remind you that you’re never alone—I'm always here for you.
-
-Love,
-Your safe harbor` },
-      { icon: "🏅", label: "Proud of You", message: `My brave Jaana,
-
-I see your strength and all you've accomplished. You make me so proud every single day.
-
-Keep shining,
-Abhinav` },
-      { icon: "💪", label: "Encouragement", message: `Beloved Jaana,
-
-Whenever doubts arise, remember how far you've come and how brightly you shine. You can conquer anything.
-
-Cheering for you,
-Abhinav` },
-      { icon: "🌍", label: "Apart", message: `Sweetheart,
-
-Though miles separate us, my heart is tethered to yours. Soon we'll be together again—hold on to that thought.
-
-Yours always,
-Abhinav` },
-      { icon: "🎉", label: "Anniversary", message: `Happy Anniversary, my love!
-
-Today marks another chapter in our story. Thank you for being my star above the ocean.
-
-Forever & always,
-Abhinav` },
-      { icon: "🎂", label: "Birthday", message: `To my beautiful Jaana,
-
-Happy Birthday! May your day be as radiant as your smile and filled with love.
-
-All my love,
-Abhinav` },
-      { icon: "😂", label: "Need a Laugh", message: `Dearest J,
-
-Here’s a silly joke: Why did the star go to school? To get a little brighter! Keep smiling, angel.
-
-😘,
-Abhinav` },
-      { icon: "😰", label: "Stressed", message: `My calm in the storm,
-
-Close your eyes, take a deep breath, and imagine my arms around you. Everything will be okay.
-
-Lovingly,
-Abhinav` },
-      { icon: "🏆", label: "Achieved a Goal", message: `Champion,
-
-Congratulations on your achievement! I’m so proud of you and all your hard work.
-
-Cheers to you,
-Abhinav` },
-      { icon: "🤗", label: "Lonely", message: `My heart,
-
-Whenever loneliness creeps in, know that you are cherished beyond measure. I’m with you in spirit.
-
-Always yours,
-Abhinav` },
-      { icon: "🔮", label: "Future", message: `My dreamer,
-
-I can’t wait for all our tomorrows—hand in hand, heart to heart. The best is yet to come.
-
-Love,
-Abhinav` },
-      { icon: "✨", label: "Inspiration", message: `My muse,
-
-Your grace, passion, and kindness inspire me daily. Keep being the incredible you.
-
-With admiration,
-Abhinav` },
-      { icon: "🤔", label: "Worried About Me", message: `Dear Jaana,
-
-Your care warms my soul. Rest assured, I’m safe and thinking of you every moment.
-
-Forever devoted,
-Abhinav` },
-      { icon: "😴", label: "Sleepy", message: `Goodnight, love,
-
-May your dreams be sweet and filled with our happiest memories. Sleep tight.
-
-Yours in every dream,
-Abhinav` },
-      { icon: "🎊", label: "Holiday", message: `My joyful Jaana,
-
-Wishing you a holiday filled with laughter, warmth, and love. Can’t wait to celebrate together.
-
-Love always,
-Abhinav` },
-      { icon: "😊", label: "Smile", message: `My sunshine,
-
-Here’s a reminder: your smile lights up my world. I hope this little note made yours bloom.
-
-😘,
-Abhinav` },
-      { icon: "😥", label: "Anxious", message: `My darling,
-
-Take a moment to breathe. You have all the strength you need, and I believe in you completely.
-
-Love,
-Abhinav` },
-      { icon: "🤗", label: "Comfort", message: `Sweet Jaana,
-
-Imagine my arms wrapped around you, holding you close. You are safe, loved, and never alone.
-
-Always,
-Abhinav` },
-      { icon: "🙏", label: "Grateful", message: `My gratitude,
-
-Thank you for being you—kind, beautiful, amazing. I’m endlessly thankful for our love.
-
-Yours,
-Abhinav` },
-      { icon: "💃", label: "Dance", message: `My rhythm,
-
-Put on our song, spin around, and dance like nobody’s watching. I’ll be right there with you in spirit.
-
-❤️,
-Abhinav` },
-      { icon: "🎈", label: "Excited", message: `My spark,
-
-Your excitement is contagious. I can’t wait to see your joy light up the room.
-
-With excitement too,
-Abhinav` },
-      { icon: "📸", label: "Nostalgic", message: `My memory keeper,
-
-Remember our first date by the ocean? I treasure that night endlessly. Here’s to making more memories.
-
-Love,
-Abhinav` },
-      { icon: "😘", label: "Kiss", message: `My sweet,
-
-Closing your eyes? Imagine my softest kiss pressed to your forehead, sealing my love for you.
-
-😘,
-Abhinav` },
-      { icon: "🌙", label: "Not There", message: `My heart,
-
-Even when I’m not by your side, you are never far from my thoughts. Feel my love reaching you now.
-
-Always,
-Abhinav` },
-      { icon: "☮️", label: "Peace", message: `My tranquility,
-
-Let your mind rest in the calm of our love. You deserve serenity and all the quiet joy it brings.
-
-Yours in peace,
-Abhinav` },
-      { icon: "😪", label: "Tired", message: `My darling,
-
-Rest your weary soul. I’ll be here when you wake, ready to hold you tight.
-
-Sweet dreams,
-Abhinav` },
-      { icon: "🌹", label: "First Date", message: `My dearest,
-
-That magical evening under the stars by the ocean—my heart knew then what it knows now: you are my forever.
-
-Love always,
-Abhinav` },
-      { icon: "✈️", label: "Next Adventure", message: `My partner in crime,
-
-Dreaming of our next adventure—whether near or far, every journey is brighter with you.
-
-Let’s go,
-Abhinav` },
-      { icon: "💖", label: "Just Because", message: `My everything,
-
-No reason needed—just a little note to say I love you more each day.
-
-Always,
-Abhinav` }
-    ];
-
-    // 3D Tilt Handlers
-    function applyTilt(el,e){ const r=el.getBoundingClientRect(),x=e.clientX-(r.left+r.width/2),y=e.clientY-(r.top+r.height/2),rx=(y/r.height)*15,ry=-(x/r.width)*15; el.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`; }
-    function resetTilt(el){ el.style.transform='rotateX(0) rotateY(0)'; }
-
-    // Confetti
-    function triggerConfetti(el){ const r=el.getBoundingClientRect(); confetti({ particleCount:80, spread:70, origin:{ x:(r.left+r.width/2)/window.innerWidth, y:(r.top+r.height/2)/window.innerHeight } }); }
-
-    // Particles
-    function spawnParticles(el){ const container=document.createElement('div'); container.style.position='absolute'; container.style.top='0'; container.style.left='0'; el.append(container); for(let i=0;i<10;i++){ const p=document.createElement('span'); p.textContent='❤️'; p.style.position='absolute'; p.style.left=`${50+Math.random()*50}%`; p.style.top=`${50+Math.random()*50}%`; p.style.opacity=1; p.style.transition='transform 2s ease, opacity 2s'; container.append(p); setTimeout(()=>{ p.style.transform=`translateY(-100px) scale(1.5)`; p.style.opacity=0; },50); setTimeout(()=>p.remove(),2050); } }
-
-    // Flying Kiss
-    function spawnKiss(el){ const kiss=document.createElement('div'); kiss.textContent='💋'; kiss.style.position='absolute'; const r=el.getBoundingClientRect(); kiss.style.left=`${r.left+r.width/2}px`; kiss.style.top=`${r.top}px`; kiss.style.fontSize='2rem'; document.body.append(kiss); setTimeout(()=>{ kiss.style.transition='transform 1.2s, opacity 1.2s'; kiss.style.transform='translateY(-140px) scale(1.6)'; kiss.style.opacity=0; },50); setTimeout(()=>kiss.remove(),1250); }
-
-    // Typing Effect
-    function typeMessage(el,text,speed){ let i=0; el.innerHTML=''; const c=document.createElement('span'); c.className='cursor'; el.append(c); (function t(){ if(i<text.length){ el.innerHTML=el.innerHTML.replace(c.outerHTML,'')+(text[i]==='\n'?'<br>':text[i]); el.append(c); i++; setTimeout(t,speed);} else c.remove(); })(); }
-
-    // Initialize Letters
-    function initLetters(){ const container=$('.envelope-container'); container.innerHTML=''; envelopesData.forEach(env=>{ const el=document.createElement('div'); el.className='envelope'; el.innerHTML=`<div class="flap"><div class="label">${env.icon} ${env.label}</div><div class="open-text">Open When</div></div><div class="body"><div class="letter"><div class="message"></div></div></div>`; container.append(el); el.addEventListener('mousemove',e=>applyTilt(el,e)); el.addEventListener('mouseleave',()=>resetTilt(el)); el.addEventListener('click',()=>{ if(el.classList.contains('open'))return; el.classList.add('open'); typeMessage(el.querySelector('.message'),env.message,40); triggerConfetti(el); spawnParticles(el); spawnKiss(el); }); }); }
-
-    // Journal
-    function loadEntries(){ const list=$('#entriesList'); list.innerHTML=''; const entries=JSON.parse(localStorage.getItem('journalEntries')||'[]'); entries.reverse().forEach(e=>{ const d=document.createElement('div'); d.className='entry'; d.textContent=e; list.append(d);} ); }
-    $('#saveEntryBtn').addEventListener('click',()=>{ const t=$('#journalInput'); const v=t.value.trim(); if(!v)return; const arr=JSON.parse(localStorage.getItem('journalEntries')||'[]'); arr.push(v); localStorage.setItem('journalEntries',JSON.stringify(arr)); t.value=''; loadEntries(); });
-
-    // Audio Control
-    function initAudio(){ const music=$('#bgMusic'), icon=$('#audioIcon'); $('#audioControl').addEventListener('click',()=>{ if(music.paused){ music.play(); icon.src='audio_on.png'; }else{ music.pause(); icon.src='audio_off.png'; }}); music.play().catch(()=>{}); }
-
-    // Cat Roam
-    function roamCat(){ const cat=$('#cat'); const x=Math.random()*(window.innerWidth-cat.clientWidth), y=Math.random()*(window.innerHeight-cat.clientHeight-50); cat.style.transform=`translate(${x}px,${y}px)`;} setInterval(roamCat,6000);
-
-    // Begin Experience
-    $('#beginBtn').addEventListener('click',()=>{ $('#intro').style.display='none'; initLetters(); setTimeout(()=>$('.nav-btn[data-target="lettersSection"]').click(),100); initAudio(); roamCat(); loadEntries(); });
   </script>
 </body>
 </html>
+
 
