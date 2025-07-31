@@ -85,6 +85,7 @@
       width: 180px; height: 120px; position: relative; background: none; cursor: pointer;
       transform-style: preserve-3d; transition: transform .3s cubic-bezier(.8,0,.2,1);
       box-shadow: var(--shadow); border-radius: 18px; outline: none;
+      z-index: 2;
     }
     .envelope:hover { transform: rotateY(7deg) scale(1.03); z-index: 5; box-shadow: 0 8px 28px #ab90e855, 0 2px 0 #fff;}
     .envelope.opened { pointer-events: none;}
@@ -97,8 +98,7 @@
     }
     .envelope.opened .envelope-flap { transform: rotateX(-120deg); transition: transform .8s cubic-bezier(.6,0,.32,1); box-shadow: none;}
     .envelope-body { width: 100%; height: 100%; background: var(--envelope-pastel1); border-radius: 0 0 18px 18px/0 0 24px 24px; position: absolute; left: 0; top: 22px; z-index: 1; box-shadow: 0 8px 36px #b5b5d811; overflow: hidden; border: 1.5px solid #fff7; background: repeating-linear-gradient(125deg, #fff9fc 0 12px, #ffe0ec 12px 24px, #fff9fc 24px 40px); transition: background .7s;}
-    .envelope-label { position: absolute; width: 100%; text-align: center; top: 64%; left: 0; font-family: var(--handwriting); font-size: 1.19rem; color: #a47b9b; letter-spacing: .01em; pointer-events: none; text-shadow: 0 2px 14px #fff5;}
-    /* Different pastel for each envelope */
+    /* Pastel colors for variety */
     .envelope-body[data-i="1"] { background: var(--envelope-pastel1);}
     .envelope-body[data-i="2"] { background: var(--envelope-pastel2);}
     .envelope-body[data-i="3"] { background: var(--envelope-pastel3);}
@@ -109,6 +109,7 @@
     .envelope-body[data-i="8"], .envelope-body[data-i="13"], .envelope-body[data-i="18"], .envelope-body[data-i="23"], .envelope-body[data-i="28"] { background: var(--envelope-pastel4);}
     .envelope-body[data-i="9"], .envelope-body[data-i="14"], .envelope-body[data-i="19"], .envelope-body[data-i="24"], .envelope-body[data-i="29"] { background: var(--envelope-pastel5);}
     .envelope-body[data-i="10"], .envelope-body[data-i="15"], .envelope-body[data-i="20"], .envelope-body[data-i="25"], .envelope-body[data-i="30"] { background: var(--envelope-pastel1);}
+    /* Envelope Paper (letter) */
     .envelope-paper {
       width: 100%; height: 160px; background: #f9f7ee; position: absolute; left: 0; top: 50px; z-index: 10; border-radius: 12px;
       box-shadow: 0 4px 32px #d0b0b036, 0 1px 0 #fff; border: 1.5px solid #f5e5ff; opacity: 0; pointer-events: none;
@@ -131,11 +132,39 @@
     /* Persian Cat */
     .persian-cat { position: fixed; left: 20vw; bottom: 0; width: 90px; height: auto; z-index: 50; filter: drop-shadow(0 3px 20px #a2b6e877); transition: left 2.3s cubic-bezier(.6,0,.2,1), bottom 1.7s; animation: catBlink 6s infinite; will-change: left, bottom; pointer-events: none;}
     @keyframes catBlink { 0%   { filter: brightness(1); } 92%  { filter: brightness(1);} 96%  { filter: brightness(.8);} 98%  { filter: brightness(1);} 100% { filter: brightness(1);}}
+    /* Envelope Label - FIXED VISIBLE */
+    .envelope-label {
+      position: absolute;
+      left: 50%; transform: translateX(-50%);
+      top: 50%; z-index: 100;
+      min-width: 150px; max-width: 170px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 16px;
+      padding: 6px 10px 7px 10px;
+      font-family: var(--handwriting);
+      font-size: 1.13rem;
+      color: #a16bb9;
+      letter-spacing: .01em;
+      box-shadow: 0 1.5px 14px #d6c2ef41;
+      text-shadow: 0 1.5px 4px #fff;
+      font-weight: bold;
+      pointer-events: none;
+      text-align: center;
+      transition: background .2s;
+      user-select: none;
+      border: 1.5px solid #ede3f7;
+    }
+    .envelope.opened .envelope-label {
+      background: rgba(255,255,255,0.75);
+      color: #a57db9;
+      font-weight: bold;
+      z-index: 120;
+    }
     @media (max-width: 700px) {
       .entrance-title { font-size: 1.7rem; }
       .envelope-outer { min-width: 128px; min-height: 125px;}
       .envelope { width: 98px; height: 67px;}
-      .envelope-label { font-size: 0.99rem;}
+      .envelope-label { font-size: 0.97rem; min-width: 80px; max-width: 105px;}
       .envelope-paper { font-size: 0.97rem; height: 102px; padding: 7px 6px;}
       #gallery { gap: 16px; padding-top: 20px;}
     }
@@ -232,7 +261,6 @@
       env.addEventListener('click', function(e) {
         if (this.classList.contains("opened")) return;
         this.classList.add("opened");
-        // Play open sound (optional): new Audio("https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa7fb8.mp3").play();
       });
       env.addEventListener('keydown', function(e) {
         if(e.key==="Enter"||e.key===" "){
@@ -285,5 +313,4 @@
   </script>
 </body>
 </html>
-
 
