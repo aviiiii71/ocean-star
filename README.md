@@ -25,11 +25,9 @@
       overflow-x: hidden;
       position: relative;
     }
-    /* Parallax Stars */
     .parallax-bg { pointer-events: none; position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; z-index: 1; overflow: hidden;}
     .star { position: absolute; width: 2px; height: 2px; border-radius: 100%; background: #fff8; animation: twinkle 4s infinite linear; opacity: 0.7;}
     @keyframes twinkle { 0% { opacity: .7 } 50% { opacity: 1 } 100% { opacity: .7 }}
-    /* Entrance Screen */
     #entrance {
       position: fixed; z-index: 99; background: var(--main-bg); width: 100vw; height: 100vh; top: 0; left: 0;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px;
@@ -47,10 +45,12 @@
     }
     @keyframes fadeInDown { from { transform: translateY(-50px); opacity: 0 } to   { transform: translateY(0); opacity: 1 }}
     .princess-crown {
-      width: 70px;
-      margin-bottom: 1.5rem;
+      font-size: 3.4rem;
+      margin-bottom: 1.3rem;
       filter: drop-shadow(0 3px 15px #dcb8fd44);
       animation: crownPop 1.8s;
+      line-height: 1;
+      display: block;
     }
     @keyframes crownPop { 0% { transform: scale(0.7) rotate(-30deg); opacity: 0 } 70% { transform: scale(1.1) rotate(5deg); opacity: 1 } 100% { transform: scale(1) rotate(0deg); }}
     #begin-btn {
@@ -69,7 +69,6 @@
     }
     #begin-btn:hover { transform: scale(1.04) translateY(-2px); box-shadow: 0 7px 22px #c08de866, 0 2px 0 #fff;}
     @keyframes fadeIn { from { opacity: 0; } to   { opacity: 1; }}
-    /* Envelope Gallery */
     #gallery {
       padding-top: 60px;
       display: grid;
@@ -98,7 +97,6 @@
     }
     .envelope.opened .envelope-flap { transform: rotateX(-120deg); transition: transform .8s cubic-bezier(.6,0,.32,1); box-shadow: none;}
     .envelope-body { width: 100%; height: 100%; background: var(--envelope-pastel1); border-radius: 0 0 18px 18px/0 0 24px 24px; position: absolute; left: 0; top: 22px; z-index: 1; box-shadow: 0 8px 36px #b5b5d811; overflow: hidden; border: 1.5px solid #fff7; background: repeating-linear-gradient(125deg, #fff9fc 0 12px, #ffe0ec 12px 24px, #fff9fc 24px 40px); transition: background .7s;}
-    /* Pastel colors for variety */
     .envelope-body[data-i="1"] { background: var(--envelope-pastel1);}
     .envelope-body[data-i="2"] { background: var(--envelope-pastel2);}
     .envelope-body[data-i="3"] { background: var(--envelope-pastel3);}
@@ -109,7 +107,6 @@
     .envelope-body[data-i="8"], .envelope-body[data-i="13"], .envelope-body[data-i="18"], .envelope-body[data-i="23"], .envelope-body[data-i="28"] { background: var(--envelope-pastel4);}
     .envelope-body[data-i="9"], .envelope-body[data-i="14"], .envelope-body[data-i="19"], .envelope-body[data-i="24"], .envelope-body[data-i="29"] { background: var(--envelope-pastel5);}
     .envelope-body[data-i="10"], .envelope-body[data-i="15"], .envelope-body[data-i="20"], .envelope-body[data-i="25"], .envelope-body[data-i="30"] { background: var(--envelope-pastel1);}
-    /* Envelope Paper (letter) */
     .envelope-paper {
       width: 100%; height: 160px; background: #f9f7ee; position: absolute; left: 0; top: 50px; z-index: 10; border-radius: 12px;
       box-shadow: 0 4px 32px #d0b0b036, 0 1px 0 #fff; border: 1.5px solid #f5e5ff; opacity: 0; pointer-events: none;
@@ -123,16 +120,28 @@
       transition: all .77s cubic-bezier(.7,0,.2,1); animation: letterUnroll 1.4s both;
     }
     @keyframes letterUnroll { 0% { transform: scale(.85) translateY(100px); opacity: 0; } 50% { opacity: .9; } 100% { transform: scale(1) translateY(-24px); opacity: 1; }}
-    .wax-seal { position: absolute; left: 47%; top: 14px; transform: translateX(-50%); width: 34px; height: 34px; z-index: 12; filter: drop-shadow(0 2px 12px #bb5dbb22); animation: waxDrip 1.7s;}
-    @keyframes waxDrip { 0% { opacity: 0; transform: translateY(-18px) scale(.6);} 70% { opacity: .85; transform: translateY(8px) scale(1.1);} 100% { opacity: 1; transform: translateY(0) scale(1);}}
-    /* Mood Animations (confetti, kiss, rain) */
+    .wax-seal { position: absolute; left: 47%; top: 10px; transform: translateX(-50%); width: 36px; height: 36px; z-index: 12; font-size:2.2rem; line-height:1; user-select:none;}
     .mood-anim { pointer-events: none; position: absolute; left: 50%; top: 0; width: 120px; height: 120px; transform: translate(-50%, -50%); z-index: 90; opacity: 0; animation: popMood 1.5s cubic-bezier(.4,0,.2,1);}
     .envelope.opened .mood-anim { opacity: 1; animation: popMood 1.5s cubic-bezier(.4,0,.2,1);}
     @keyframes popMood { 0% { opacity: 0; transform: scale(.7);} 50% { opacity: 1; transform: scale(1.25);} 90% { opacity: 1;} 100% { opacity: 0; transform: scale(0.2);}}
-    /* Persian Cat */
-    .persian-cat { position: fixed; left: 20vw; bottom: 0; width: 90px; height: auto; z-index: 50; filter: drop-shadow(0 3px 20px #a2b6e877); transition: left 2.3s cubic-bezier(.6,0,.2,1), bottom 1.7s; animation: catBlink 6s infinite; will-change: left, bottom; pointer-events: none;}
-    @keyframes catBlink { 0%   { filter: brightness(1); } 92%  { filter: brightness(1);} 96%  { filter: brightness(.8);} 98%  { filter: brightness(1);} 100% { filter: brightness(1);}}
-    /* Envelope Label - FIXED VISIBLE */
+    .flowers-bouquet {
+      position: fixed;
+      left: 18vw;
+      bottom: 0;
+      z-index: 50;
+      font-size: 3.3rem;
+      user-select:none;
+      pointer-events: none;
+      animation: flowerFloat 10s infinite alternate cubic-bezier(.5,0,.5,1);
+      text-shadow: 0 4px 24px #fbb1d1aa;
+    }
+    @keyframes flowerFloat {
+      0% { left: 18vw; bottom: 0; transform: scale(1) rotate(-3deg);}
+      25% { left: 42vw; bottom: 2vh; transform: scale(1.12) rotate(3deg);}
+      40% { left: 60vw; bottom: 0; transform: scale(0.99) rotate(-1deg);}
+      65% { left: 75vw; bottom: 1.7vh; transform: scale(1.11) rotate(2deg);}
+      100% { left: 18vw; bottom: 0; transform: scale(1) rotate(-3deg);}
+    }
     .envelope-label {
       position: absolute;
       left: 50%; transform: translateX(-50%);
@@ -167,17 +176,15 @@
       .envelope-label { font-size: 0.97rem; min-width: 80px; max-width: 105px;}
       .envelope-paper { font-size: 0.97rem; height: 102px; padding: 7px 6px;}
       #gallery { gap: 16px; padding-top: 20px;}
+      .flowers-bouquet { font-size: 2.1rem;}
     }
   </style>
 </head>
 <body>
-  <!-- Parallax BG Stars -->
   <div class="parallax-bg" id="parallax-bg"></div>
-  <!-- Persian Cat -->
-  <img src="https://i.imgur.com/Yv3sZ5g.png" alt="Persian Cat" class="persian-cat" id="cat" />
-  <!-- Entrance Screen -->
+  <div class="flowers-bouquet">💐🌸🌷🌹🌺🌻</div>
   <div id="entrance">
-    <img class="princess-crown" src="https://i.imgur.com/klC5gP8.png" alt="Princess Crown" />
+    <span class="princess-crown">👑</span>
     <div class="entrance-title">
       From the <b>Star</b> Above the Ocean<br>
       <span style="font-size:1.4rem;">💖 To my Jaana 💖</span>
@@ -187,12 +194,10 @@
       <span>31 magical envelopes await you...<br>Each one, a piece of my heart.</span>
     </div>
   </div>
-  <!-- Envelope Gallery -->
   <main style="z-index:2; position:relative;">
     <div id="gallery"></div>
   </main>
   <script>
-    // 31 Open When Envelopes
     const envelopes = [
       { label: "Open When: You Miss Me", mood: "kiss", text: "My Jaana, every second apart feels like an ocean. When you miss me, remember: I’m thinking of you under the same sky, loving you even more than yesterday. Imagine my arms around you, holding you close—until the moment we meet again." },
       { label: "Open When: You’re Sad", mood: "rain", text: "Sometimes the world feels heavy, and that's okay. Close your eyes, take a deep breath, and remember: your Star is always shining for you. Even on cloudy days, you are my sun. I love every shade of you—your smiles, your tears, your every emotion." },
@@ -225,20 +230,10 @@
       { label: "Open When: You’re Missing Your Family", mood: "rain", text: "Family is forever, and so is my love for you. I’ll always be your home, no matter where we are." },
       { label: "Open When: You Want to Feel Beautiful", mood: "confetti", text: "You are breathtaking. Inside and out. You make the world brighter just by being yourself. Never doubt your beauty." },
       { label: "Open When: You Want to Feel Like a Princess", mood: "confetti", text: "You are my princess, my queen, my everything. I will always cherish you, adore you, and make you feel royal." },
-      { label: "Open When: It’s 31st July", mood: "kiss", text: "Our day. One year of love, hope, and magic. Thank you for finding me, for loving me. This is just the beginning of our forever. Happy anniversary, my love." },
+      { label: "Open When: It’s 31st July", mood: "kiss", text: "Our day. One year of love, hope, and magic. Thank you for finding me, for loving me. This is just the beginning of our forever. Happy anniversary, my love." }
     ];
-
-    // Mood Animations
-    const moodIcons = {
-      kiss: "💋",
-      rain: "🌧️",
-      confetti: "🎉"
-    };
-
-    // Paste a simple wax seal image (transparent PNG, free):  
-    const waxSeal = "https://i.imgur.com/oKktxSU.png";
-
-    // Gallery rendering
+    const moodIcons = { kiss: "💋", rain: "🌧️", confetti: "🎉" };
+    const waxSeal = "🕯️";
     const gallery = document.getElementById("gallery");
     envelopes.forEach((env, i) => {
       const el = document.createElement('div');
@@ -249,33 +244,25 @@
           <div class="envelope-body" data-i="${i+1}"></div>
           <div class="envelope-label">${env.label}</div>
           <div class="envelope-paper"><span>${env.text}</span></div>
-          <img src="${waxSeal}" class="wax-seal" alt="Wax Seal"/>
+          <span class="wax-seal">${waxSeal}</span>
           <div class="mood-anim" style="font-size:3.2rem;">${moodIcons[env.mood]}</div>
         </div>
       `;
       gallery.appendChild(el);
     });
-
-    // Envelope open/close animations
     document.querySelectorAll('.envelope').forEach(env => {
-      env.addEventListener('click', function(e) {
+      env.addEventListener('click', function() {
         if (this.classList.contains("opened")) return;
         this.classList.add("opened");
       });
       env.addEventListener('keydown', function(e) {
-        if(e.key==="Enter"||e.key===" "){
-          this.click();
-        }
+        if(e.key==="Enter"||e.key===" ") this.click();
       });
     });
-
-    // Entrance screen
     document.getElementById("begin-btn").onclick = function() {
       document.getElementById("entrance").classList.add("hide");
       setTimeout(()=>{document.getElementById("entrance").style.display="none"},900);
     };
-
-    // Parallax stars
     function randomBetween(a,b){return a+Math.random()*(b-a);}
     let parallaxBG = document.getElementById("parallax-bg");
     for(let i=0;i<80;i++){
@@ -286,19 +273,6 @@
       s.style.animationDuration=randomBetween(2,6)+"s";
       parallaxBG.appendChild(s);
     }
-
-    // Persian Cat Animation
-    const cat = document.getElementById("cat");
-    function moveCat() {
-      let left = Math.random()*80+5; // 5vw-85vw
-      let bottom = Math.random()*16; // 0-16vh
-      cat.style.left = left+"vw";
-      cat.style.bottom = bottom+"vh";
-      setTimeout(moveCat, randomBetween(4,9)*1000);
-    }
-    moveCat();
-
-    // Optional: Envelope 3D tilt effect
     document.querySelectorAll('.envelope').forEach(env=>{
       env.addEventListener('mousemove',function(e){
         const rect = this.getBoundingClientRect();
@@ -309,7 +283,6 @@
         this.style.transform = "";
       });
     });
-
   </script>
 </body>
 </html>
